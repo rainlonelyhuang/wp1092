@@ -1,0 +1,105 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Gayathri", sans-serif;
+}
+
+body {
+	width: 570px;
+	height: 570px;
+    background: -webkit-linear-gradient(black, blue);
+}
+.disc{
+	top: 30%;
+	left: 50%;
+    width: 300px;
+    height: 300px;
+	position: absolute;
+	transform: translate(-50%, -50%);
+}
+#circle {
+	height: 100%;
+	width: 100%;
+	border-radius: 50%;
+	animation: rotation 15s linear infinite;
+}
+#circle:hover{
+	animation: rotation 2s linear infinite;
+}
+@keyframes rotation{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(1080deg);}
+}
+.button{
+    padding: 0;
+    background-color: transparent;
+    box-sizing: border-box;
+	top: 80%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+}
+#play{
+	left: 50%;
+	position: absolute;
+    height: 48px;
+    border-style: solid;
+    border-width: 24px 0 24px 36px;
+    border-color: transparent transparent transparent white;
+}
+#play:hover{
+	border-color: transparent transparent transparent orange;
+}
+#next{
+	left: 60%;
+	position: absolute;
+	height: 48px;
+    border-style: solid;
+    border-width: 24px 0 24px 36px;
+    border-color: transparent transparent transparent white;
+}
+#next:hover{
+	border-color: transparent transparent transparent orange;
+}
+#next:after{
+	content: "";
+	display:inline-block;
+	height: 48px;
+	width: 7px;
+	background-color: white;
+	position: absolute;
+	transform: translate(0%, -50%);
+}
+#next:hover:after{
+	background-color: orange;
+}
+#prev{
+	left: 40%;
+	position: absolute;
+	height: 48px;
+    border-style: solid;
+    border-width: 24px 36px 24px 0;
+    border-color: transparent white transparent transparent;
+}
+#prev:hover{
+	border-color: transparent orange transparent transparent;
+}
+#prev:before{
+	content: "";
+	display:inline-block;
+	height: 48px;
+	width: 7px;
+	background-color: white;
+	position: absolute;
+	transform: translate(-100%, -50%);
+}
+#prev:hover:before{
+	background-color: orange;
+}
+progress{
+	top: 65%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	width: 30%;
+}
