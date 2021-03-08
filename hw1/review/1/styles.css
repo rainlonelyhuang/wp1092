@@ -1,0 +1,248 @@
+body, html {
+    height: 100%;
+  }
+.bg-img{
+    background: url(https://mtracks.azureedge.net/public/images/albums/284/624.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    height: 100%;
+    position: relative;
+}
+.player_bg{
+    background: rgb(245,245,245);
+    height: 640px;
+    width: 360px;
+    position: absolute;
+    left: 38%;
+    top: 6%;
+    border-radius: 2%;
+    display: flex;
+}
+.pause_circle{
+    background: black;
+    border-radius: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 75%;
+    width: 50px;
+    margin: -25px 0 0 -25px;
+}
+.pause_circle:hover{
+    background: rgb(100,100,100);
+}
+.pause_circle_inner{
+    position: center;
+    height: 100%;
+}
+.pause_circle_inner:before{
+    content: "";
+    width: 10%;
+    height: 30%;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+    position: absolute;
+    top: 35%;
+    left: 37.5%;
+}
+.top_text{
+    background: transparent;
+    position: absolute;
+    left: 40%;
+    top: 0%;
+    font-size: 18px;
+    font-weight: bold;
+}
+.second_text{
+    background: transparent;
+    position: absolute;
+    left: 42.5%;
+    top: 5%;
+    font-size: 10px;
+    color: rgb(100,100,100);
+}
+.circle1{
+    background:rgb(235,235,235);
+    border-radius: 100%;
+    position: absolute;
+    top: 4%;
+    left: 0%;
+    width: 100%;
+    height: 55%;
+}
+.circle2{
+    background:rgb(225,225,225);
+    border-radius: 100%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+}
+.img_center{
+    border-radius: 100%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    animation: img_shake 1s infinite;
+}
+.toplf{
+    color:white;
+    font-size: 100%;
+    font-weight: bold;
+    text-align:center;
+    line-height:30px;
+    background-color: black;
+    position: absolute;
+    top: 2.5%;
+    left: 5%;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+}
+.toprt{
+    background-color: black;
+    position: absolute;
+    top: 2.5%;
+    left: 87.5%;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+}
+.toplf:hover, .toprt:hover{
+    background-color: gray;
+}
+.menu_icon{
+    width: 12.5px;
+	height: 1px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+	background-color: white;
+	padding: 2px 0;
+    background-clip:content-box;
+    position: absolute;
+    top: 37.5%;
+    left: 29%;
+}
+.next_box{
+    background-color: white;
+    width: 80%;
+	height: 10%;
+    position: absolute;
+    top: 85%;
+    left: 10%;
+	box-shadow: 0 0 15px rgb(210, 210, 210);
+}
+.nextsong_img{
+    background: url(https://i.scdn.co/image/7a02f08dce547a073a8d1cfa73b9ffd0d12f49cb);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20%;
+	height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 5%;
+}
+.next{
+    color: rgb(225,225,225);
+    position: absolute;
+    top: 0%;
+    left: 30%;
+}
+.nextsong_name{
+    color:rgb(175, 175, 175);
+    position: absolute;
+    top: 30%;
+    left: 30%;
+}
+.next_box:hover{
+    box-shadow: 0 0 20px rgb(100, 100, 100)
+}
+.forward{
+    position: absolute;
+    top: 72.5%;
+    left: 20%;
+}
+.f_arrow{
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 20px 15px 0;
+    border-color: transparent rgb(210,210,210) transparent transparent ;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+.f_line{
+    border-right: 4px solid rgb(210,210,210);
+    height: 30px;
+    position: absolute;
+    top: 0%;
+    left: -4px;
+}
+.backward{
+    position: absolute;
+    top: 72.5%;
+    left: 72.5%;
+}
+.b_arrow{
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 20px;
+    border-color: transparent transparent transparent rgb(210,210,210);
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+.b_line{
+    border-left: 4px solid rgb(210,210,210);
+    height: 30px;
+    position: absolute;
+    top: 0%;
+    left: 20px;
+}
+.progress_bar{
+    background-color: rgb(210,210,210);
+    position: absolute;
+    top: 67.5%;
+    left: 10%;
+    height: 5px;
+    width: 80%;
+}
+.bar_black{
+    background-color: black;
+    width: 20%;
+    height: 3.5px;
+    position: absolute;
+    top: 30%;
+    
+}
+.play_time{
+    color:rgb(210,210,210);
+    position: absolute;
+    top: 62%;
+    left: 10%;
+}
+.total_time{
+    color: rgb(210,210,210);
+    position: absolute;
+    top: 62%;
+    left: 82.5%;
+}
+.play_time:hover, .total_time:hover{
+    color: black;
+}
+@keyframes img_shake{
+    30% { transform: scale(1,1); }
+    50% { transform: scale(1.05,1.05); }
+    70% { transform: scale(1,1); }
+}

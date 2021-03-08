@@ -1,0 +1,9 @@
+<h1>ccs特效</h1>
+<ol>
+    <li>左上角圓形圖示hover變色</li>
+    <li>右上角圓形圖示hover變色</li>
+    <li>圓形中心專輯影像放大縮小</li>
+    <li>秒數hover變色</li>
+    <li>暫停鍵hover變色</li>
+    <li>下方下首歌區塊hover邊界變色</li>
+</ol>

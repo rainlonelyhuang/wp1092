@@ -1,0 +1,43 @@
+body {
+    background-image: linear-gradient(to right, rgb(16, 1, 82), rgba(255, 255, 255, 0));
+}
+
+.frame {
+    border: 2px solid rgb(174, 145, 240);
+    margin: auto;
+    background-color: rgb(47, 47, 49);
+    width: 40%;
+}
+
+.image {
+    width: 100%;
+    margin: auto;
+}
+
+.singer {
+    color: snow;
+    font-family: "Times New Roman";
+    font-size: 1.5vw;
+    text-align: center;
+}
+
+.song {
+    color: snow;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    font-size: 3vw;
+    text-align: center;
+}
+
+.controlBot {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.but {
+    height: 3vw;
+    width: 3vw;
+    border-radius: 1.5vw;
+    color: black;
+}
