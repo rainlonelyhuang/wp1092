@@ -11,6 +11,7 @@ var urls = ["https://truth.bahamut.com.tw/s01/201810/790a9031ec36a98af10b58ef26c
 			"https://i.imgur.com/Hwp48Sh.jpg",
 			"https://i.imgur.com/UwaTAY6.jpg",
 			"https://i.imgur.com/Ak8O4cy.jpg",
+			"https://i.imgur.com/pUEKVFx.jpg",
 			"https://i.imgur.com/vRMYLL7.jpg",
 			"https://i.imgur.com/O0hCYL5.jpg",
 			"https://i.imgur.com/SMFduGe.jpg",
@@ -22,9 +23,10 @@ var urls = ["https://truth.bahamut.com.tw/s01/201810/790a9031ec36a98af10b58ef26c
 			"https://i.imgur.com/WZMiDep.jpg",
 			"https://i.imgur.com/XLepJXV.jpg",
 			"https://i.imgur.com/C3HOOUx.jpg",
-			"https://i.imgur.com/XLepJXV.jpg",
+			"https://i.imgur.com/a1b2PTn.jpg",
 			"https://i.imgur.com/vrAy6F4.jpg",
 			"https://i.imgur.com/OX91b2H.jpg",
+			"https://i.imgur.com/W1Gvv6j.jpg",
 			"https://i.imgur.com/6Lzz0pS.jpg"]
 var index = 0;
 var display = document.getElementById("display");
