@@ -13,6 +13,7 @@ var urls = ["https://truth.bahamut.com.tw/s01/201810/790a9031ec36a98af10b58ef26c
 			"https://i.imgur.com/Ak8O4cy.jpg",
 			"https://i.imgur.com/pUEKVFx.jpg",
 			"https://i.imgur.com/vRMYLL7.jpg",
+			"https://i.kym-cdn.com/photos/images/original/001/107/354/b2d.png",
 			"https://i.imgur.com/O0hCYL5.jpg",
 			"https://i.imgur.com/SMFduGe.jpg",
 			"https://i.imgur.com/IjMkJpI.jpg",
@@ -74,6 +75,7 @@ function updateImg(){
 			display.style.opacity = 1;
 		};
 	}
+	document.getElementById("show-now").textContent = (index + 1) + " / " + urls.length
 }
 function checkButt(){
 	if(index == 0){
