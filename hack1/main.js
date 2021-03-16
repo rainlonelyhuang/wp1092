@@ -25,7 +25,7 @@ comment_input.addEventListener("focus", function() {
 	comment_button.style.display = "block";
 });
 comment_button.addEventListener("click", function() {
-	console.log("click");
+	//console.log("click");
 	this.style.backgroundColor = "#cccccc";
 	let new_comment = comment.cloneNode(true);
 	new_comment.getElementsByClassName("comment-text")[0].textContent = comment_input.value;
