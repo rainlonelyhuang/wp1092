@@ -3,10 +3,10 @@ import React from "react";
 function Footer({left, shown, appSetFilter, appSetClearCompleted}){
 	const handleClick = filter => {
 		appSetFilter(filter);
-		document.getElementById("all").style.backgroundColor = "";
-		document.getElementById("active").style.backgroundColor = "";
-		document.getElementById("completed").style.backgroundColor = "";
-		document.getElementById(filter).style.backgroundColor = "gray";
+		document.getElementById("all").style.border = "none";
+		document.getElementById("active").style.border = "none";
+		document.getElementById("completed").style.border = "none";
+		document.getElementById(filter).style.border = "2px solid black";
 	}
 	if(shown === 0){
 		return (null);
@@ -16,7 +16,7 @@ function Footer({left, shown, appSetFilter, appSetClearCompleted}){
 			<footer class="todo-app__footer" id="todo-footer">
 				<div class="todo-app__total">{left} left</div>
 				<ul class="todo-app__view-buttons">
-					<button id="all" onClick={() => handleClick("all")} style={{backgroundColor: "gray"}}>All</button>
+					<button id="all" onClick={() => handleClick("all")} style={{border: "2px solid black"}}>All</button>
 					<button id="active" onClick={() => handleClick("active")}>Active</button>
 					<button id="completed" onClick={() => handleClick("completed")}>Completed</button>
 				</ul>
