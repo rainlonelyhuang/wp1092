@@ -23,6 +23,10 @@ function MergeSchool() {
     const [step, setStep] = useState(0);
     const [win, setWin] = useState(false);
     const [seed, setSeed] = useState(secret_seed);
+	const [newgrids, setNewgrids] = useState([[false, false, false, false],
+		[false, false, false, false],
+		[false, false, false, false],
+		[true, true, false, false]]);
 
     // Pesudo random number generator
     // 4 bytes hashing function By Thomas Wang or Robert Jenkins
@@ -78,6 +82,10 @@ function MergeSchool() {
 		setQs_ranking(32768);
 		setGameover(false);
 		setWin(false);
+		setNewgrids([[false, false, false, false],
+			[false, false, false, false],
+			[false, false, false, false],
+			[true, true, false, false]]);
     }
 
     
@@ -104,6 +112,12 @@ function MergeSchool() {
         } 
         let random_empty_grid = empty_grid[random_num];
         board[random_empty_grid[0]][random_empty_grid[1]] = 2;
+		let newgrids = [[false, false, false, false],
+			[false, false, false, false],
+			[false, false, false, false],
+			[false, false, false, false]];
+		newgrids[random_empty_grid[0]][random_empty_grid[1]] = true;
+		setNewgrids(newgrids);
         return {board};
     }
     
@@ -161,7 +175,7 @@ function MergeSchool() {
         // #########################
 
         let board = prevBoard;
-        let combination =  0;
+        let combination = 0;
 		board = rotateClockwise(board);
 		let nextBoard = moveRight(board);
 		board = rotateCounterClockwise(nextBoard.board);
@@ -337,7 +351,7 @@ function MergeSchool() {
     return (
         <>      
             <Header step={step} qs_ranking={qs_ranking} newgame={initializeBoard} best_qs_ranking={best_qs_ranking} />
-            <Board2048 className="wrapper" board={board} gameover={gameover} win={win} newgame={initializeBoard}/>
+            <Board2048 className="wrapper" board={board} gameover={gameover} win={win} newgame={initializeBoard} newgrids={newgrids}/>
             <div className="btn-groups">
                 <div className="btn-useful" id="badend-btn" onClick={setBadEnd}>BadEnd</div>
                 <div className="btn-useful" id="goodend-btn" onClick={setGoodEnd}>GoodEnd</div>

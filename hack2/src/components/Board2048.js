@@ -1,6 +1,6 @@
 import Row from './Row'
 
-export default function Board2048 ({ board, gameover, win, newgame }) {
+export default function Board2048 ({ board, gameover, win, newgame, newgrids }) {
 
     let boardClassName = gameover || win? 'board game-over-board': 'board';
     let infoClassName = gameover || win? 'info game-over-wrapper end-fade-in': 'info';
@@ -10,7 +10,7 @@ export default function Board2048 ({ board, gameover, win, newgame }) {
         <>
         <table className={boardClassName} id='board-full' >
             <tbody>
-                {board.map((row_vector, row_idx) => (<Row key={row_idx} row={row_idx} values={row_vector} />))}
+                {board.map((row_vector, row_idx) => (<Row key={row_idx} row={row_idx} values={row_vector} newgrids={newgrids[row_idx]}/>))}
             </tbody>
         </table>
         <div className={infoClassName} id='game-over-info'>
