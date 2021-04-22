@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    font-family: -apple-system;
+    margin: 0px;
+}
+  
+.table-wrapper {
+    overflow: scroll;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+    
+th {
+    background-color: #eee;
+    text-align: center;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 70px;
+}
+  
+td {
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 70px;
+}
+
+button {
+    height: 30px;
+    width: 30px;
+}
+
+.wrapper {
+    display: flex; 
+    flex-direction: row;
+}
+
+.r0 {
+    background-color: #ddd;
+    height: 30px;
+}
+
+.c0 {
+    background-color: #ddd;
+    width: 30px;
+}
+
+.cell-input {
+    border: none;
+    width:70px;
+    height:20px;
+}
+
+input:focus {
+    outline: none;
+    border: 1.5px solid blue;
+    border-radius: 2px;
+}
+
+.firstCol {
+    background-color: #eee;
+    text-align: center;
+}
+
+.firstRow {
+    background-color: #eee;
+    text-align: center;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 70px;
+}
+
+.focusRC {
+    background-color: #888;
+}
+
+#top-left {
+    margin-top: 60px;
+}
+
+#left-top {
+    margin-left: 100px;
+}
