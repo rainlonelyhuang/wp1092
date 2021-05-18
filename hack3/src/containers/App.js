@@ -54,6 +54,12 @@ function App() {
 	const showInfo = (data) => {
 		setCurrentData(data);
 	}
+	const changeStart = (e) => {
+		setStartStation(e.target.value);
+	}
+	const changeEnd = (e) => {
+		setEndStation(e.target.value);
+	}
   return (
     <div className="wrapper">
       <div className="welcome-title"><h1>Welcome to MRT Distance Calculator !</h1></div>
@@ -61,17 +67,30 @@ function App() {
         <div className="mode-selector">
           
           <span id="start-station-span">起始站</span>
-          <select id="start-select" className="start-station"> {/* you should add both onChange and value to attributes */}
-            <option></option>
+          <select id="start-select" className="start-station" onChange={changeStart}> {/* you should add both onChange and value to attributes */}
+			  {Object.keys(data).map(k => 
+            <optgroup label={k}>
+				{data[k].map(d => 
+				<option id={"start-group-" + d.station_id}>{d.station_name}</option>
+				)}
+			</optgroup>
+			  )}
             {
               // generate options of all stations within option group
               // coding here ...
+			  
             }
           </select>
 
           <span id="end-station-span">終點站</span>
-          <select id="end-select" className="end-station"> {/* you should add both onChange and value to attributes */}
-            <option></option>
+          <select id="end-select" className="end-station" onChange={changeEnd}> {/* you should add both onChange and value to attributes */}
+            {Object.keys(data).map(k => 
+            <optgroup label={k}>
+				{data[k].map(d => 
+				<option id={"end-group-" + d.station_id}>{d.station_name}</option>
+				)}
+			</optgroup>
+			  )}
             {
               // generate options of all stations within option group
               // coding here ...
