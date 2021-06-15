@@ -54,7 +54,14 @@ export default function Uploader(props) {
     const { mutation } = props;
     // TODO 
     // write an onSubmitData that calls the mutation function 
-    const onSubmitData = () => {}
+    const onSubmitData = (tidyData) => {
+		console.log(tidyData);
+		mutation({
+			variables: {
+				data: tidyData
+			}
+		});
+	}
 
     // DO NOT MODIFY BELOW THIS LINE 
     const headers = rawData.length > 0 ? Object.keys(rawData[0]) : [];
