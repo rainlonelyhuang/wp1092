@@ -1,13 +1,14 @@
 {
-  "name": "own",
+  "name": "hw7",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "cd frontend && yarn start",
-    "server": "cd backend && yarn dev"
+    "server": "cd backend && yarn server"
   },
   "dependencies": {
-    "dotenv-defaults": "^2.0.2"
+    "dotenv-defaults": "^2.0.2",
+    "mongoose": "^5.12.13"
   }
 }

@@ -29,3 +29,20 @@
   padding: 20px;
   overflow: auto;
 }
+
+.message-bar {
+  min-height: 30px;
+  padding: 1px;
+  padding-bottom: 3px;
+}
+.message {
+  display: inline-block;
+  padding: 1px;
+  background-color: #eeeeee;
+  color: #808080;
+  border-radius: 5px;
+  max-width: 300px;
+}
+.message-sender {
+  padding: 5px;
+}

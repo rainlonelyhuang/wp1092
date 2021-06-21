@@ -24,7 +24,7 @@
 
       const server = new WebSocket('ws://localhost:8080');
       server.onopen = () => console.log('Server connected.');
-      server.onmessage = (m) => { // 接收server來的message
+      server.onmessage = (m) => {
         onEvent(JSON.parse(m.data));
       };
       server.sendEvent = (e) => server.send(JSON.stringify(e));
@@ -66,8 +66,7 @@
         messagesDOM.innerHTML = '';
       };
 
-      const onEvent = (e) => { 
-      // 看收到的message是哪個type然後作相對應的動作
+      const onEvent = (e) => {
         const { type } = e;
 
         switch (type) {

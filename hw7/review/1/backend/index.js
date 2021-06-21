@@ -41,6 +41,12 @@ const MessageModel = mongoose.model('Message', messageSchema);
 const makeName = (name, to) => {
   return [name, to].sort().join('_');
 };
+const logCHAT = (from, to) => {
+  console.log(`[${new Date()}] Received a CHAT event from ${from} to ${to}.`)
+}
+const logMESSAGE = (from, to, body) => {
+  console.log(`[${new Date()}] Received a MESSAGE event from ${from} to ${to}: "${body.length <= 40 ? body : body.substring(0, 40) + " ..."}".`)
+}
 
 /* -------------------------------------------------------------------------- */
 /*                            SERVER INITIALIZATION                           */
@@ -53,15 +59,13 @@ const wss = new WebSocket.Server({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// create new user
-const validateUser = async (name) => { 
+const validateUser = async (name) => {
   const existing = await UserModel.findOne({ name });
   if (existing) return existing;
   return new UserModel({ name }).save();
 };
 
-// create new chatBox
-const validateChatBox = async (name, participants) => { 
+const validateChatBox = async (name, participants) => {
   let box = await ChatBoxModel.findOne({ name });
   if (!box) box = await new ChatBoxModel({ name, users: participants }).save();
   return box
@@ -70,21 +74,13 @@ const validateChatBox = async (name, participants) => {
     .execPopulate();
 };
 
-// (async () => {
-//   const a = await validateUser('a');
-//   const b = await validateUser('b');
-
-//   console.log(a);
-
-//   const cbName = makeName('a', 'b');
-
-//   const chatBox = await validateChatBox(cbName, [a, b]);
-
-//   console.log(chatBox);
-// })();
 
 const chatBoxes = {}; // keep track of all open AND active chat boxes
 
+
+/* -------------------------------------------------------------------------- */
+/*                               MAIN LOGICS                                  */
+/* -------------------------------------------------------------------------- */
 wss.on('connection', function connection(client) {
   client.id = uuid.v4();
   client.box = ''; // keep track of client's CURRENT chat box
@@ -92,24 +88,23 @@ wss.on('connection', function connection(client) {
   client.sendEvent = (e) => client.send(JSON.stringify(e));
 
   client.on('message', async function incoming(message) {
+    message = JSON.parse(message);
 
-    // const { data } = message
-    const [ type, payload ] = JSON.parse( message );
+    const { type } = message;
 
-
-    switch (type) { 
-
+    switch (type) {
       // on open chat box
       case 'CHAT': {
-        const { name, to } = payload;
+        const {
+          data: { name, to },
+        } = message;
+        logCHAT(name, to)
 
         const chatBoxName = makeName(name, to);
 
         const sender = await validateUser(name);
         const receiver = await validateUser(to);
         const chatBox = await validateChatBox(chatBoxName, [sender, receiver]);
-
-        // console.log(client.box) // save somthin like Albert_DJ DJ_Leyun ...
 
         // if client was in a chat box, remove that.
         if (chatBoxes[client.box])
@@ -124,21 +119,23 @@ wss.on('connection', function connection(client) {
         client.sendEvent({
           type: 'CHAT',
           data: {
-            friend: to,
             messages: chatBox.messages.map(({ sender: { name }, body }) => ({
               name,
               body,
             })),
+            sender: name,
+            receiver: to,
           },
         });
 
         break;
       }
 
-      // on sending messages
       case 'MESSAGE': {
-        const { name, key, body } = payload;
-        const to = (name == key.split('_')[0])? key.split('_')[1] : key.split('_')[0]
+        const {
+          data: { name, to, body },
+        } = message;
+        logMESSAGE(name, to, body)
 
         const chatBoxName = makeName(name, to);
 
@@ -152,22 +149,20 @@ wss.on('connection', function connection(client) {
         chatBox.messages.push(newMessage);
         await chatBox.save();
 
-
         chatBoxes[chatBoxName].forEach((client) => {
           client.sendEvent({
             type: 'MESSAGE',
             data: {
               message: {
                 name,
-                to,
                 body,
               },
+              key: chatBoxName
             },
           });
         });
       }
     }
-
 
     // disconnected
     client.once('close', () => {
@@ -176,10 +171,10 @@ wss.on('connection', function connection(client) {
   });
 });
 
+
+require('dotenv-defaults').config()
 mongo.connect();
 
-const PORT = process.env.port || 8080
-
-server.listen( PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
+server.listen(8080, () => {
+  console.log('Server listening at http://localhost:8080');
 });

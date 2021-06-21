@@ -1,76 +1,52 @@
 import { useState } from "react";
 
-const useChat = (server) => {
+const server = new WebSocket('ws://localhost:8080');
+server.onopen = () => console.log('Server connected.');
 
-    
-    
-    const [messages, setMessages] = useState([]);
-    const [status, setStatus ] = useState({});
-    
-    
-    server.onmessage = (m) => { // 接收server來的message
-      onEvent(JSON.parse(m.data));
-    };
-    server.sendEvent = (e) => server.send(JSON.stringify(e));
+const sendData = (data) => { server.send(JSON.stringify(data)); }
 
-    const startChat = (me, friend) => {
-        console.log('Start Chat!!!');
-        console.log(friend);
+const useChat = () => {
+  const [ messages, setMessages ] = useState({}); // { type, msg }
+  const [ key, setKey ] = useState('');
 
-        server.sendEvent({
-           type: 'CHAT',
-           data: { to: friend, name: me },
-           //data: { key },
-        });
-    };
-  
-    const sendMessage = (payload) => {
-      console.log(payload);
-      const { me, friend, body } = payload;
-      server.sendEvent({
-          type: 'MESSAGE',
-          data: { to: friend, name: me, body: body },
-      });
-    };
-
-
-    const onEvent = (e) => { 
-    // 看收到的message是哪個type然後作相對應的動作
-        const { type } = e;
-        switch (type) {
-          case 'CHAT': {
-            setMessages(e.data.messages);
-            break;
-          }
-          case 'MESSAGE': {
-            setMessages([...messages, e.data.message]);
-            break;
-          }
-        }
-      };
-  
-      
-  
-    /*
-    client.onmessage = (byteString) =>{
-        const { data } = byteString;
-        const [task, payload] = JSON.parse(data);
-        switch (task) {
-            case "output" : {
-                setMessage(() =>
-                    [...messages, ...payload]); break; }
-            case "status" : {
-                setStatus(payload); break; }
-            default: break;
-        }
+  server.onmessage = (m) => {
+    const { type, data } = JSON.parse(m.data);
+    switch (type) {
+      case 'CHAT': {
+        setMessages({key:key, messages: data.messages});
+        //messages = data.messages;
+        break;
+      }
+      case 'MESSAGE': {
+        setMessages({key:key, messages:[...messages.messages, data.message]});
+        //messages = [...messages, data.messages];
+        break;
+      }
+      default:
+        break;
     }
-    
-    const sendData = async (data) => {
-        await client.send(
-            JSON.stringify(data));
-    };
-    */
-    return { status, messages, sendMessage, startChat };
-}
+  };
+
+  const sendMessage = (payload) => {
+    const {key, body} = payload;
+    setKey(key);
+    sendData({
+      type: 'MESSAGE',
+      data: body
+    });
+  }; // { key, msg }
+
+  const startChat = (payload) => {
+    const key = payload.name <= payload.to ?
+            `${payload.name}_${payload.to}` : `${payload.to}_${payload.name}`;
+    setKey(key);
+    sendData({
+      type: 'CHAT',
+      data: payload
+    });
+  };
+
+  return { messages, startChat, sendMessage };
+};
 
 export default useChat;

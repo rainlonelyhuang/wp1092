@@ -5,10 +5,10 @@ const express = require('express');
 const path = require('path');
 const uuid = require('uuid');
 
-const mongo = require('./mongo'); // 這個 mongo 就是從 mongo.js export 的 module
+const mongo = require('./mongo');
+require('dotenv-defaults').config();
 
 const app = express();
-
 
 /* -------------------------------------------------------------------------- */
 /*                               MONGOOSE MODELS                              */
@@ -17,7 +17,7 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
   name: { type: String, required: true },
-  chatBoxes: [{ type: mongoose.Types.ObjectId, ref: 'ChatBox' }], // foreign key 的寫法
+  chatBoxes: [{ type: mongoose.Types.ObjectId, ref: 'ChatBox' }],
 });
 
 const messageSchema = new Schema({
@@ -39,7 +39,7 @@ const MessageModel = mongoose.model('Message', messageSchema);
 /* -------------------------------------------------------------------------- */
 /*                                  UTILITIES                                 */
 /* -------------------------------------------------------------------------- */
-const makeName = (name, to) => {  // 對兩個名字做排序，去做 chatBox的名字
+const makeName = (name, to) => {
   return [name, to].sort().join('_');
 };
 
@@ -52,8 +52,7 @@ const wss = new WebSocket.Server({
   server,
 });
 
-app.use(express.static(path.join(__dirname, 'public'))); // app.use([routingPath], callback)
-//path.join() 就是產生路徑, __dirname是目前程式所在的目錄位置, 在後面再加上一個/public
+app.use(express.static(path.join(__dirname, 'public')));
 
 const validateUser = async (name) => {
   const existing = await UserModel.findOne({ name });
@@ -65,9 +64,9 @@ const validateChatBox = async (name, participants) => {
   let box = await ChatBoxModel.findOne({ name });
   if (!box) box = await new ChatBoxModel({ name, users: participants }).save();
   return box
-    .populate('users') //用 foreign key的話要記得 populate
+    .populate('users')
     .populate({ path: 'messages', populate: 'sender' })
-    .execPopulate(); // 執行 populate 這件事情
+    .execPopulate();
 };
 
 // (async () => {
@@ -86,18 +85,15 @@ const validateChatBox = async (name, participants) => {
 const chatBoxes = {}; // keep track of all open AND active chat boxes
 
 wss.on('connection', function connection(client) {
-  client.id = uuid.v4(); // uuid : 64-bit unique ID
+  client.id = uuid.v4();
   client.box = ''; // keep track of client's CURRENT chat box
 
   client.sendEvent = (e) => client.send(JSON.stringify(e));
 
   client.on('message', async function incoming(message) {
-
-    console.log(message);
-    console.log(chatBoxes);
     message = JSON.parse(message);
 
-    const { type } = message; // 這樣寫等於 const type = message.type
+    const { type } = message;
 
     switch (type) {
       // on open chat box
@@ -110,12 +106,7 @@ wss.on('connection', function connection(client) {
 
         const sender = await validateUser(name);
         const receiver = await validateUser(to);
-
         const chatBox = await validateChatBox(chatBoxName, [sender, receiver]);
-
-        console.log(sender)
-        console.log(receiver)
-        console.log(chatBox)
 
         // if client was in a chat box, remove that.
         if (chatBoxes[client.box])
@@ -144,7 +135,6 @@ wss.on('connection', function connection(client) {
         const {
           data: { name, to, body },
         } = message;
-        console.log(body);
 
         const chatBoxName = makeName(name, to);
 

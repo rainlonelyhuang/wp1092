@@ -1,132 +1,108 @@
 import "../App.css";
-import { useState, useEffect } from "react";
-import { Tabs, Input, Tag } from "antd";
-import ChatModal   from "../Components/ChatModal.js"
-import useChatBox from "../hooks/useChatBox.js";
-import useChat from "../hooks/useChat.js";
-
+import { useState } from "react";
+import { Tabs, Input } from "antd";
+import ChatModal from "../Components/ChatModel"
+import useChatBox from "../hooks/useChatBox"
+import useChat from "../hooks/useChat"
 
 const { TabPane } = Tabs;
-const ChatRoom = ({me, displayStatus, server}) => {
-
+const ChatRoom = ({ me, displayStatus }) => {
   const [messageInput, setMessageInput] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [activeKey, setActiveKey] = useState("");
-  const [activeFriend, setActiveFriend] = useState("");
+  const [nowFriend, setNowFriend] = useState("");
 
-  const { chatBoxes, createChatBox, removeChatBox } =  useChatBox();
+  const addChatBox = () => { setModalVisible(true); };
 
-   
-  
-  const { status, messages, sendMessage, startChat } = useChat(server);
+  const { chatBoxes, createChatBox, removeChatBox } = useChatBox();
+  const { messages, startChat, sendMessage } = useChat();
 
-  const [username, setUsername] = useState('');
-  const [body, setBody] = useState('')
-
-  const addChatBox = () => {setModalVisible(true)};
-
-  function isOpen(server) { console.log(server.readyState === server.OPEN);
-    return server.readyState === server.OPEN }
-
-  const handleChange = (key) => {
-    setActiveKey(key);
-    // Find friend's name from key ....
-    const words = key.split('_');
-    if(words[0] === me) setActiveFriend(words[1]);
-    else setActiveFriend(words[0]);
-
-    //startChat(me, activeFriend);
-  }
-  isOpen(server);
-
-   useEffect( ()=>{
-    if(activeFriend !== "") startChat(me, activeFriend);
-   }, [activeFriend])
-  // useEffect( () => {
-  //   const server = new WebSocket('ws://localhost:8080');
-  //   server.onopen = () => console.log('Server connected.');}, []);
   return (
-    <>
-      <div className="App-title">
-        <h1>{me}'s Chat Room</h1> 
-      </div>
+    <><div className="App-title">
+          <h1>{me}'s Chat Room</h1> </div>
       <div className="App-messages">
-        <Tabs 
-          type="editable-card"
-          activeKey={activeKey}
-          onChange={handleChange}
-          onEdit={(targetKey, action) => {
-              if( action == "add") addChatBox();
-              else if( action == "remove") {
-                let newKey = removeChatBox(targetKey, activeKey) 
-                handleChange(newKey);
-              }
-          }}
+        <Tabs type="editable-card" 
+              activeKey={activeKey}
+              onChange={(key) => { 
+                setActiveKey(key);
+                startChat({name:key.split('_')[0], to:key.split('_')[1]});
+                if(me === key.split('_')[0]) {
+                  setNowFriend(key.split('_')[1]);
+                }else{
+                  setNowFriend(key.split('_')[0]);
+                }
+              }}
+              onEdit={(targetKey, action) => {
+              if (action === "add") addChatBox();
+              else if (action === "remove") setActiveKey(removeChatBox(targetKey, activeKey));}}
         >
-          {chatBoxes.map(({ friend, key, chatLog }) =>{
-            return (
-              <TabPane tab={friend} key={key} closable={true}>
-                <p> {friend}'s chatbox.</p>
-              </TabPane>
-            );
-          })}
+          {chatBoxes.map((
+            { friend, key, chatLog }) => {
+              if(key === messages.key){
+                return (
+                    <TabPane tab={friend} 
+                      key={key} closable={true}>
+                      <div>
+                        {messages.messages.map(({ name, body }, i) =>
+                          me===name ? 
+                          <p style={{textAlign:'right', float:'right', width: '51%'}}>
+                            <span style={{wordBreak:'break-all', borderRadius:'25%', padding:'5px', backgroundColor: '#EEE', color: '#AAA'}} key={i+'body'}>{`${body}`}</span>
+                            <span key={i+'name'}>{`${name}`}</span>
+                          </p>:
+                          <p style={{textAlign:'left', float:'left', width: '51%'}}>
+                            <span key={i+'name'}>{`${name}`}</span>
+                            <span style={{wordBreak:'break-all', borderRadius:'25%', padding:'5px', backgroundColor: '#EEE', color: '#AAA'}} key={i+'body'}>{`${body}`}</span>
+                          </p>
+                        )}
+                      </div>
+                    </TabPane>
+                );}else {
+                  return (
+                    <TabPane tab={friend} 
+                      key={key} closable={true}>
+                    </TabPane>
+                );}})}
         </Tabs>
-        
-        
-        {
-        messages.length === 0 ? (<p style={{ color: '#ccc'}}> No messages ... </p>) :
-          (messages.map(({ name, body}, i) => (name === me) ? 
-            <p className="App-message App-message-me" key={i}> 
-              {body} <Tag color="#2db7f5">{name}</Tag>                
-            </p>    :  
-            <p className="App-message" key={i}> 
-              <Tag color="blue">{name}</Tag> {body} 
-            </p>    
-
-          
-        ))}
-    
-
+        <ChatModal
+          visible={modalVisible}
+          onCreate={({ name }) => {
+            setActiveKey(createChatBox(name, me));
+            startChat({name:me, to:name});
+            setNowFriend(name);
+            setModalVisible(false);
+          }}
+          onCancel={() => {
+            setModalVisible(false);
+          }}
+        />
       </div>
-      <ChatModal
-        visible={modalVisible}
-        onCreate={({ name }) => {
-          setActiveFriend(name);
-          //startChat(me, activeFriend);
-          setActiveKey(createChatBox(name, me));
-          setModalVisible(false);
-        }}
-        onCancel={() => {
-          setModalVisible(false);
-        }}
-      />
       <Input.Search
-        value={messageInput}
-        onChange={(e) => setMessageInput(e.target.value)}
-        placeholder="Enter message here...."
-        enterButton="Send"
-        size="large"
-        onSearch={(msg) => { 
-          if(!msg){
-            displayStatus({
-              type: "error",
-              msg: "Please enter message.",
-            });
-            return;
-          } else if(activeKey === ""){
-            displayStatus({
-              type: "error",
-              msg: "Please add a chatbox first.",
-            });
-            setMessageInput("");
-            return;
-          }
-          sendMessage({ key: activeKey, me: me, friend: activeFriend, body: msg });
-          setMessageInput(""); 
-        }}
-      ></Input.Search>
-    </>
-  );
+            value={messageInput}
+            onChange={(e) => 
+            setMessageInput(e.target.value)}
+            enterButton="Send"
+            placeholder=
+            "Enter message here..."
+            onSearch={(msg) => {
+                if (!msg) {
+                  displayStatus({
+                    type: "error",
+                    msg: "Please enter message.",
+                  });
+                  return;
+                } else if (activeKey === "") {
+                  displayStatus({
+                    type: "error",
+                    msg: "Please add a chatbox first.",
+                  });
+                  setMessageInput("");
+                  return;
+                }
+                sendMessage({ key:activeKey, body:{name: me, to: nowFriend, body: msg} });
+                setMessageInput("");
+            }}      
+      ></Input.Search> 
+    </>);
 };
-
 export default ChatRoom;
+      
