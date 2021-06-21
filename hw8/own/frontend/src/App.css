@@ -1,0 +1,52 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 500px;
+  margin: auto;
+}
+
+.App-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-title h1 {
+  margin: 0;
+  margin-right: 20px;
+  font-size: 3em;
+}
+
+.App-messages {
+  width: 100%;
+  height: 300px;
+  background: #eeeeee52;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+  overflow: auto;
+}
+.message {
+  background: white;
+  padding: 1px 10px 10px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+  /* text-align: center; */
+  margin-bottom: 1em;
+  /* min-width: 10em; */
+  width: fit-content;
+  position: relative;
+  word-wrap: break-word;
+  max-width: 80%;
+}
+
+.from-me {
+  left: 100%;
+  position: relative;
+  transform: translateX(-100%);
+  text-align: right;
+}
