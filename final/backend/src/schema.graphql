@@ -1,33 +1,53 @@
 type Query {
-  chatBox(name1: String, name2: String): ChatBox!
+  user(id: String): User!
+  post(id: ID): Post!
+  comment(id: ID): Comment!
+  point(id:ID):Point!
 }
 
 type Mutation {
-  createChatBox(name1: String, name2: String): ChatBox!
-  createMessage(senderName: String, chatBoxName: String, messageBody: String): Message!
+  newUser(id: String, name: String, password: String): User!
+  modifyUser(id: String, name: String, password: String): User!
+  newPost(title: String, publisherID: String, body: String, time: String): Post!
+  newComment(publisherID: String, body: String, time: String, parentPostID: ID): Comment!
+  deletePost(postID: ID): Boolean
+  doLike(userID:ID, pointID:ID): Point
+  doUnlike(userID:ID, pointID:ID): Point
 }
 
-type Subscription {
-  message(name1: String, name2: String): Message!
-}
 
 
 type User {
-  id: ID!
+  id: String!
   name: String!
+  password: String!
 }
 
-type Message {
-  id: ID!
-  sender: User!
-  body: String!  
+type Post {
+  title: String!
+  publisher: User!
+  comments: [Comment]!
+  body: String!
+  like: Point!
+  unlike: Point!
+  time: String!
 }
 
-type ChatBox {
-  id: ID!
-  name: String!
-  messages: [Message!]
+type Comment {
+  publisher: User!
+  body: String!
+  like: Point!
+  unlike: Point!
+  time: String!
 }
+
+type Point {
+  users: [User]!
+  count: Int!
+  type: Boolean!
+}
+
+
 
 
 

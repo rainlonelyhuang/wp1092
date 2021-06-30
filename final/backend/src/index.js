@@ -4,10 +4,13 @@ import mongo from './mongo';
 
 import Query from './resolvers/Query';
 import Mutation from './resolvers/Mutation';
-import Subscription from './resolvers/Subscription';
+import Post from './resolvers/Post';
+import Comment from './resolvers/Comment';
+import Point from './resolvers/Point';
 
-import ChatBox from './resolvers/ChatBox';
-import Message from './resolvers/Message';
+
+//import Subscription from './resolvers/Subscription';
+
 
 const pubsub = new PubSub();
 
@@ -16,9 +19,10 @@ const server = new GraphQLServer({
   resolvers: {
     Query,
     Mutation,
-    Subscription,
-    ChatBox,
-    Message,
+    Post,
+    Comment,
+    Point
+    //Subscription,
   },
   context: {
     db,
