@@ -54,7 +54,7 @@ const Query = {
     let perPage = 5
     let skipNum = Page * perPage
     //console.log("1",Page,await db.PostModel.findOne())     
-    let posts = await db.PostModel.find().limit(perPage).skip(skipNum);
+    let posts = await db.PostModel.find().sort({time:-1}).limit(perPage).skip(skipNum);
     let count = await db.PostModel.count()
     return {posts:posts, pageNum:Math.ceil(count/perPage)}
   },
@@ -65,7 +65,7 @@ const Query = {
     let skipNum = Page * perPage
 
     let post = await db.PostModel.findOne({_id:ObjectId(postID)});
-    let commentsIDs = await post.comments.slice(skipNum,skipNum + perPage)
+    let commentsIDs = await post.comments.reverse().slice(skipNum,skipNum + perPage)
     let comments = await commentsIDs.map(async(id) => {
       return await db.CommentModel.findOne({_id:id})
     })

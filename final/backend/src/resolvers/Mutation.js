@@ -71,7 +71,7 @@ const Mutation = {
     let old_post = await db.PostModel.findOne({_id:ObjectId(parentPostID)});
     let old_comments = old_post.comments
     console.log("pre post",old_post,old_comments)
-    let new_post = await db.PostModel.findOneAndUpdate({_id:parentPostID},{comments:[...old_comments,comment._id]})
+    let new_post = await db.PostModel.findOneAndUpdate({_id:parentPostID},{time:time, comments:[...old_comments,comment._id]})
     console.log("changed post",new_post)
         console.log("comment",comment)
     return comment;
@@ -95,7 +95,7 @@ const Mutation = {
 
   async doLike(parent, {userID, pointID}, { db, pubsub }, info){
     let point= await db.PointModel.findOne({_id:ObjectId(pointID)})
-    //console.log("find point",point)
+    console.log("find point",point)
     let users = point.users
     let count = point.count
     let index = await users.indexOf(userID)
