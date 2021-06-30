@@ -3,7 +3,7 @@ type Query {
   post(id: ID): Post!
   comment(id: ID): Comment!
   point(id:ID):Point!
-  postList(Page:Int):[Post]
+  postList(Page:Int):postPayload!
   commentList(Page:Int, postID:ID):[Comment]
 }
 
@@ -17,6 +17,10 @@ type Mutation {
   doUnlike(userID:ID, pointID:ID): Point
 }
 
+type postPayload {
+  posts: [Post]
+  pageNum: Int
+}
 
 
 type User {

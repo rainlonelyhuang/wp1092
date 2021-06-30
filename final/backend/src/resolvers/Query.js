@@ -65,9 +65,14 @@ const Query = {
     let skipNum = Page * perPage
 
     let post = await db.PostModel.findOne({_id:ObjectId(postID)});
-    console.log("post",post)
-    let comments = await post.comments.slice(Page * perPage,perPage)
+    console.log("post",post,perPage,skipNum)
+    let commentsIDs = await post.comments.slice(skipNum,skipNum + perPage)
+    let comments = await commentsIDs.map(async(id) => {
+      return await db.CommentModel.findOne({_id:id})
+    })
     console.log("comments",comments);
+    console.log("commentsID",commentsIDs);
+
     return comments
   }
 
