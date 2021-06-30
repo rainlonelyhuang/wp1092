@@ -1,8 +1,6 @@
 var ObjectId = require('mongodb').ObjectId; 
 
-const makeName = (name, to) => {
-  return [name, to].sort().join('_');
-};
+var Math = require("mathjs")
 
 
 const Query = {
@@ -52,28 +50,28 @@ const Query = {
   },
 
   async postList(parent, {Page}, { db }, info) {
+    Page = Page - 1
     let perPage = 5
     let skipNum = Page * perPage
     //console.log("1",Page,await db.PostModel.findOne())     
     let posts = await db.PostModel.find().limit(perPage).skip(skipNum);
-    //console.log("posts",posts)
-    return posts
+    let count = await db.PostModel.count()
+    return {posts:posts, pageNum:Math.ceil(count/perPage)}
   },
 
   async commentList(parent, {Page,postID}, { db }, info) {
+    Page = Page - 1
     let perPage = 5
     let skipNum = Page * perPage
 
     let post = await db.PostModel.findOne({_id:ObjectId(postID)});
-    console.log("post",post,perPage,skipNum)
     let commentsIDs = await post.comments.slice(skipNum,skipNum + perPage)
     let comments = await commentsIDs.map(async(id) => {
       return await db.CommentModel.findOne({_id:id})
     })
-    console.log("comments",comments);
-    console.log("commentsID",commentsIDs);
 
-    return comments
+    let count = post.comments.length
+    return {comments:comments, pageNum:Math.ceil(count/perPage)}
   }
 
 };
