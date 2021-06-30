@@ -3,6 +3,8 @@ type Query {
   post(id: ID): Post!
   comment(id: ID): Comment!
   point(id:ID):Point!
+  postList(Page:Int):[Post]
+  commentList(Page:Int, postID:ID):[Comment]
 }
 
 type Mutation {

@@ -51,7 +51,25 @@ const Query = {
     return point;
   },
 
-  //async postlist
+  async postList(parent, {Page}, { db }, info) {
+    let perPage = 5
+    let skipNum = Page * perPage
+    //console.log("1",Page,await db.PostModel.findOne())     
+    let posts = await db.PostModel.find().limit(perPage).skip(skipNum);
+    //console.log("posts",posts)
+    return posts
+  },
+
+  async commentList(parent, {Page,postID}, { db }, info) {
+    let perPage = 5
+    let skipNum = Page * perPage
+
+    let post = await db.PostModel.findOne({_id:ObjectId(postID)});
+    console.log("post",post)
+    let comments = await post.comments.slice(Page * perPage,perPage)
+    console.log("comments",comments);
+    return comments
+  }
 
 };
 
