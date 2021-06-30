@@ -50,8 +50,7 @@ const Mutation = {
       let unlike_p = await new db.PointModel({users:[],count:0,type:false}).save()
 
       console.log("like_p",like_p)
-      let post = await new db.PostModel({title:title, publisher:publisher, body:body, time:time, like:like_p, unlike:unlike_p, comments:[], objID:"60dc5f61242ac42424bda106"}).save()
-      post = await db.PostModel.findOneAndUpdate({_id:post._id},{objID:post._id})
+      let post = await new db.PostModel({title:title, publisher:publisher, body:body, time:time, like:like_p, unlike:unlike_p, comments:[]}).save()
       console.log("post",post)
       return post;
     }
@@ -96,7 +95,7 @@ const Mutation = {
 
   async doLike(parent, {userID, pointID}, { db, pubsub }, info){
     let point= await db.PointModel.findOne({_id:ObjectId(pointID)})
-    console.log("find point",point)
+    //console.log("find point",point)
     let users = point.users
     let count = point.count
     let index = await users.indexOf(userID)
