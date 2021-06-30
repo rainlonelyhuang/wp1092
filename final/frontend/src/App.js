@@ -4,21 +4,35 @@ import {
     Route,
 } from "react-router-dom";
 
-import Upload from './containers/Upload';
-import Stats from './containers/Stats';
+import Login from './containers/Login';
+import Signup from './containers/Signup';
 import Header from './components/Header';
+import { useState } from 'react';
 
+const LOCALSTORAGE_KEY = 'userID';
 function App() {
+	const [userID, setUserID] = useState(localStorage.getItem(LOCALSTORAGE_KEY) || '');
+	const saveUserID = (ID) => {
+		setUserID(ID);
+		localStorage.setItem(LOCALSTORAGE_KEY, ID);
+	};
+	const removeUserID = () => {
+		setUserID('');
+		localStorage.removeItem(LOCALSTORAGE_KEY);
+	};
   return (
     <div className="App">
-        <Header />
+        <Header userID={userID} removeUserID={removeUserID}/>
         <Router>
             <Switch>
-                <Route path="/upload">
-                    <Upload/>
+                <Route path="/login">
+                    <Login saveUserID={saveUserID}/>
+                </Route>
+				<Route path="/signup">
+                    <Signup saveUserID={saveUserID}/>
                 </Route>
                 <Route path="/">
-                    <Stats/>
+                    null
                 </Route>
             </Switch>
         </Router>

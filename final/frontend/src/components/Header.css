@@ -3,8 +3,12 @@
     flex-direction: row;
     font-size: large;
     padding: 3vh 3vw 3vh 3vw;
-    background-color: #563d7c;
+    background: linear-gradient(45deg, blue, black);;
     color: white;
+	position: fixed;
+	left: 0;
+    top: 0;
+    right: 0;
 }
 
 .Header .control {
@@ -22,9 +26,10 @@
     border: 1px solid #ffe484;
     background-color: transparent;
     border-radius: 5px;
+	cursor: pointer;
 }
 
-.Header .control :hover {
+.Header .control .button:hover {
     background-color: #ffe484;
     color: black;
     transition-duration: 200ms;
