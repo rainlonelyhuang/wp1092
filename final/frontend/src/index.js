@@ -18,14 +18,14 @@ const url = new URL("/graphql", window.location.href);
 
 // Create an http link:
 const httpLink = new HttpLink({
-  // uri: 'http://localhost:5000/graphql',
-  uri: url.href,
+  uri: 'http://localhost:5000',
+  // uri: url.href,
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  // uri: `ws://localhost:5000/graphql`,
-  uri: url.href.replace("http", "ws"),
+  uri: `ws://localhost:5000`,
+  // uri: url.href.replace("http", "ws"),
   options: { reconnect: true },
 });
 

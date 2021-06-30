@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 
-export const INSERT_PEOPLE_MUTATION = gql`
-  mutation insertPeople(
-    $data: [PersonInput!]!
-  ) {
-    insertPeople(
-      data: $data
-    ) 
+export const NEW_USER_MUTATION = gql`
+  mutation newUser($id: String, $name: String, $password: String){
+    newUser(id: $id, name: $name, password: $password){
+		id
+		name
+		password
+	  }
   }
 `;
