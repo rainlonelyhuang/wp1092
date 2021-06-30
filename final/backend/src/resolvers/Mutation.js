@@ -50,7 +50,8 @@ const Mutation = {
       let unlike_p = await new db.PointModel({users:[],count:0,type:false}).save()
 
       console.log("like_p",like_p)
-      let post = await new db.PostModel({title:title, publisher:publisher, body:body, time:time, like:like_p, unlike:unlike_p, comments:[]}).save()
+      let post = await new db.PostModel({title:title, publisher:publisher, body:body, time:time, like:like_p, unlike:unlike_p, comments:[], objID:"60dc5f61242ac42424bda106"}).save()
+      post = await db.PostModel.findOneAndUpdate({_id:post._id},{objID:post._id})
       console.log("post",post)
       return post;
     }

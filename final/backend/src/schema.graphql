@@ -41,6 +41,7 @@ type Post {
   like: Point!
   unlike: Point!
   time: String!
+  objID: ID!
 }
 
 type Comment {

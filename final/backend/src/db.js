@@ -17,6 +17,7 @@ const postSchema = new Schema({
   like: { type: mongoose.Types.ObjectId, required: "Point" },
   unlike: { type: mongoose.Types.ObjectId, required: "Point" },
   time: { type: String, required: true },
+  objID: { type: mongoose.Types.ObjectId, required: "Post" },
 });
 
 const pointSchema = new Schema({
