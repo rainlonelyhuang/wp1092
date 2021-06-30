@@ -1,11 +1,8 @@
 import { useState } from "react";  
 const useChat = () => {
   const [status, setStatus] = useState({}); // { type, msg }
-  const sendMessage = (server, data) => {
-    server.sendEvent({
-	  type: 'MESSAGE',
-	  data
-	});
+  const sendMessage = (payload) => {
+    console.log(payload);
   }; // { key, msg }
   return { status, sendMessage };
 };

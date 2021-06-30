@@ -1,4 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose'
+
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   name: { type: String, required: true },
@@ -7,7 +9,7 @@ const userSchema = new Schema({
 
 const messageSchema = new Schema({
   // chatBox: { type: mongoose.Types.ObjectId, ref: 'ChatBox' },
-  name: { type: String },
+  sender: { type: mongoose.Types.ObjectId, ref: 'User' },
   body: { type: String, required: true },
 });
 
@@ -21,10 +23,4 @@ const UserModel = mongoose.model('User', userSchema);
 const ChatBoxModel = mongoose.model('ChatBox', chatBoxSchema);
 const MessageModel = mongoose.model('Message', messageSchema);
 
-const db = {
-  UserModel,
-  ChatBoxModel,
-  MessageModel,
-};
-
-export { db as default };
+export default {UserModel, ChatBoxModel, MessageModel};

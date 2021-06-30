@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 
 import {
   ApolloClient,
@@ -14,6 +14,9 @@ import {
 import { split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
+
+
+
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -40,17 +43,19 @@ const link = split(
   wsLink,
   httpLink,
 );
+
 const client = new ApolloClient({
   link,
   cache: new InMemoryCache().restore({}),
 });
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

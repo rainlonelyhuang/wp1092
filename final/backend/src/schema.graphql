@@ -1,12 +1,26 @@
-type Mutation {
-  createChatBox(name1: String, name2: String): ChatBox!
-  createMessage(from: String, to: String, body: String): Message!
+type Query {
+  chatBox(name1: String, name2: String): ChatBox!
 }
 
-type Query {
-  chatBox(name: String): ChatBox!
-  message(id: ID): Message!
-  user(name: String): User!
+type Mutation {
+  createChatBox(name1: String, name2: String): ChatBox!
+  createMessage(senderName: String, chatBoxName: String, messageBody: String): Message!
+}
+
+type Subscription {
+  message(name1: String, name2: String): Message!
+}
+
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type Message {
+  id: ID!
+  sender: User!
+  body: String!  
 }
 
 type ChatBox {
@@ -15,21 +29,6 @@ type ChatBox {
   messages: [Message!]
 }
 
-type Message {
-  id: ID!
-  name: String!
-  body: String!
-}
 
-type User {
-  id: ID!
-  name: String!
-}
 
-type Subscription {
-  message(name: String!): MessageSubscriptionPayload!
-}
 
-type MessageSubscriptionPayload {
-  data: Message!
-}

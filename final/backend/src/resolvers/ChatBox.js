@@ -1,9 +1,9 @@
+// import MessageModel from '../db'
 const ChatBox = {
   messages(parent, args, { db }, info) {
-    return Promise.all(
-      parent.messages.map((mId) => 
-          db.MessageModel.findById(mId)),
-    );
+  	return Promise.all(
+  		parent.messages.map((mid) => db.MessageModel.findById(mid)),
+  	);
   },
 };
 

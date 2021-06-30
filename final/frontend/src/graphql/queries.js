@@ -1,12 +1,22 @@
 import { gql } from '@apollo/client';
 
 export const CHATBOX_QUERY = gql`
-  query chatBox($name: String){
-    chatBox(name: $name){
-		messages{
-			name
-		  body
-		}
-	}
+  query chatBox(
+    $name1: String!
+    $name2: String!
+  ) {
+    chatBox(
+      name1: $name1
+      name2: $name2
+    ) {
+      name
+      messages {
+        id
+        sender {
+          name
+        }
+        body
+      }
+    }
   }
 `;

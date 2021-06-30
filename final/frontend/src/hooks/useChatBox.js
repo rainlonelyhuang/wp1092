@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState } from "react"; 
 
 const useChatBox = () => {
-	const [chatBoxes, setChatBoxes] = useState([]);
+  const [chatBoxes, setChatBoxes] = useState([]);
+
   const createChatBox = (friend, me) => {
     const newKey = me <= friend ?
           `${me}_${friend}` : `${friend}_${me}`;
@@ -10,11 +11,13 @@ const useChatBox = () => {
                       "'s chat box has already opened.");
     }
     const newChatBoxes = [...chatBoxes];
-    const chatLog = [];
-    newChatBoxes.push({ friend, key: newKey, chatLog });
+    // const chatLog = [];
+    newChatBoxes.push({ friend, key: newKey });
     setChatBoxes(newChatBoxes);
+    // setActiveKey(newKey);
     return newKey;
   };
+
   const removeChatBox = (targetKey, activeKey) => {
     let newActiveKey = activeKey;
     let lastIndex;
@@ -30,8 +33,9 @@ const useChatBox = () => {
       }
     } else newActiveKey = ""; // No chatBox left
     setChatBoxes(newChatBoxes);
+    // setActiveKey(newActiveKey);
     return newActiveKey;
   };
-  return { chatBoxes, setChatBoxes, createChatBox, removeChatBox };
+  return { chatBoxes, createChatBox, removeChatBox };
 };
 export default useChatBox;
