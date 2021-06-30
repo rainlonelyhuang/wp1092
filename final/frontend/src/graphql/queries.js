@@ -1,22 +1,14 @@
 import { gql } from '@apollo/client';
 
-export const CHATBOX_QUERY = gql`
-  query chatBox(
-    $name1: String!
-    $name2: String!
-  ) {
-    chatBox(
-      name1: $name1
-      name2: $name2
+
+export const STATS_COUNT_QUERY = gql`
+    query statsCount(
+        $locationKeywords: [String!]!
+        $severity: Int
     ) {
-      name
-      messages {
-        id
-        sender {
-          name
-        }
-        body
-      }
+        statsCount(
+            locationKeywords: $locationKeywords,
+            severity: $severity,
+        )
     }
-  }
 `;
