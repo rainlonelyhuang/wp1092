@@ -27,7 +27,7 @@ const Post = () => {
 	if (data && comment_query.data) {
 		const post = data.post;
 		const comments = comment_query.data.commentList.comments;
-		const lastPage = comment_query.data.commentList.pageNum;
+		let lastPage = comment_query.data.commentList.pageNum;
 		if (lastPage <= 0) {
 			lastPage = 1;
 		}

@@ -22,9 +22,11 @@ export const POST_QUERY = gql`
 	        body
 	        like {
 	          count
+	          id
 	        }
 	        unlike {
 	          count
+	          id
 	        }
 	        comments {
 	        	time
@@ -50,9 +52,11 @@ export const POST_LIST_QUERY = gql`
 		        body
 		        like {
 		          count
+		          id
 		        }
 		        unlike {
 		          count
+		          id
 		        }
 		        comments {
 		        	time
@@ -82,9 +86,11 @@ export const COMMENT_LIST_QUERY = gql`
 		        body
 		        like {
 		          count
+		          id
 		        }
 		        unlike {
 		          count
+		          id
 		        }
 		        time
 		    }
