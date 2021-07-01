@@ -10,9 +10,9 @@ type Query {
 type Mutation {
   newUser(id: String, name: String, password: String): User!
   modifyUser(id: String, name: String, password: String): User!
-  newPost(title: String, publisherID: String, body: String, time: String): Post!
-  newComment(publisherID: String, body: String, time: String, parentPostID: ID): Comment!
-  deletePost(postID: ID): Boolean
+  newPost(title: String, publisherID: String, body: String, password: String): Post!
+  newComment(publisherID: String, body: String, parentPostID: ID, password: String): Comment!
+  deletePost(publisherID: String, postID: ID, password: String): Boolean
   doLike(userID:ID, pointID:ID): Point
 }
 
@@ -56,6 +56,7 @@ type Point {
   users: [User]!
   count: Int!
   type: Boolean!
+  id:ID!
 }
 
 

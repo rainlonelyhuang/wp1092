@@ -1,4 +1,6 @@
 import uuidv4 from 'uuid/v4';
+import bcrypt from "bcryptjs";
+
 var ObjectId = require('mongodb').ObjectId; 
 
 
@@ -6,6 +8,32 @@ const checkUser = async (db, id) => {
   const existing = await db.UserModel.findOne({ id });
   return existing;
 };
+
+
+
+function getDateTime() {
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+
+    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+}
 
 
 const Mutation = {
@@ -35,12 +63,18 @@ const Mutation = {
   },
 
 
-  async newPost(parent, {title, publisherID, body, time}, { db, pubsub }, info) {
+  async newPost(parent, {title, publisherID, body,  password}, { db, pubsub }, info) {
     ///////////////////////cannot return with like,unlike,comment
+    let time = getDateTime();
+    console.log("time = ", time)
     let publisher = await checkUser(db,publisherID);
     if(!publisher){
       console.log("publisher not exist")
       return publisher
+    }
+    if(!bcrypt.compareSync(password, publisher.password)){
+      console.log("verify fail",password, publisher.password)
+      //return null;
     }
 
     if (title && publisher && body && time) {
@@ -59,9 +93,17 @@ const Mutation = {
   },
 
 
-  async newComment(parent, {publisherID, body, time, parentPostID}, { db, pubsub }, info) {
+  async newComment(parent, {publisherID, body, parentPostID, password}, { db, pubsub }, info) {
+    let time = getDateTime();
+    console.log("time = ", time)
 
     let publisher = await checkUser(db,publisherID);
+
+    if(!bcrypt.compareSync(password, publisher.password)){
+      console.log("verify fail",password, publisher.password)
+    //  return null;
+    }
+
     let like_p = await new db.PointModel({users:[],count:0,type:true}).save()
     let unlike_p = await new db.PointModel({users:[],count:0,type:false}).save()
 
@@ -77,8 +119,22 @@ const Mutation = {
     return comment;
   },
 
-  async deletePost(parent, {postID}, { db, pubsub }, info){
+  async deletePost(parent, {publisherID, postID, password}, { db, pubsub }, info){
+
+    let publisher = await checkUser(db,publisherID);
+    if(!bcrypt.compareSync(password, publisher.password)){
+      console.log("verify fail",password, publisher.password)
+      return null;
+    }
+
+
     let post = await db.PostModel.findOne({_id:ObjectId(postID)})
+
+    if(publisher != post.publisher){
+      console.log("not your post, cannot not delete",publisher,post.publisher)
+      return null;
+    }
+
     await db.PointModel.deleteOne({_id:ObjectId(post.like)});
     await db.PointModel.deleteOne({_id:ObjectId(post.unlike)});
     let comments = post.comments

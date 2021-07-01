@@ -6,6 +6,11 @@ const Point = {
     );
   },
 
+  async id(parent, args, { db }, info) {
+    //console.log("parent id =",parent._id)
+    return parent._id;
+  },
+
 };
 
 export { Point as default };
