@@ -74,7 +74,7 @@ const Mutation = {
     }
     if(!bcrypt.compareSync(password, publisher.password)){
       console.log("verify fail",password, publisher.password)
-      //return null;
+      return null;
     }
 
     if (title && publisher && body && time) {
@@ -101,7 +101,7 @@ const Mutation = {
 
     if(!bcrypt.compareSync(password, publisher.password)){
       console.log("verify fail",password, publisher.password)
-    //  return null;
+      return null;
     }
 
     let like_p = await new db.PointModel({users:[],count:0,type:true}).save()
@@ -150,12 +150,19 @@ const Mutation = {
   },
 
   async doLike(parent, {userID, pointID}, { db, pubsub }, info){
+
+    let user = await checkUser(db,userID);
+    if(!user){
+      console.log("user not exist")
+      return null;
+    }
+
+
     let point= await db.PointModel.findOne({_id:ObjectId(pointID)})
-    //console.log("find point",point)
     let users = point.users
     let count = point.count
-    let index = await users.indexOf(userID)
-    //console.log("users",users,"count",count,"idnex",index)
+    let index = await users.indexOf(user._id)
+    //console.log("userid",user._id)
     if(index >= 0){
       console.log("cancel ")
       await users.splice(index,1)
@@ -164,8 +171,8 @@ const Mutation = {
       return point;
     }
     else{
-      //console.log("add ");
-      await users.push(userID);
+      console.log("add ");
+      await users.push(user._id);
       let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users})
       return point;
     }
