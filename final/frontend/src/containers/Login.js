@@ -5,7 +5,7 @@ import { USER_QUERY } from '../graphql/index'
 
 import "./Login.css";
 
-const Login = ({ saveUserID }) => {
+const Login = ({ saveUser }) => {
 	const [ID, setID] = useState('');
 	const [passwd, setPasswd] = useState('');
 	const [validID, setValidID] = useState(false);
@@ -16,7 +16,7 @@ const Login = ({ saveUserID }) => {
 		if(validID){
 			console.log(verifyPasswd(passwd, data.user.password));
 			if(verifyPasswd(passwd, data.user.password)){
-				saveUserID(ID);
+				saveUser(ID, passwd);
 				window.location = "/";
 			}
 			else{
@@ -44,10 +44,10 @@ const Login = ({ saveUserID }) => {
 			<h1 className="title">使用者登入</h1>
 		<div className="card">
 			<div><input type="text" className="text-input" placeholder="ID" onChange={(e) => setID(e.target.value)}/></div>
-			{validID? null: <div><span style={{color: "red"}}>{ID === ""? "必填": "查無此ID"}</span></div>}
+			{validID? null: <div><span style={{color: "red"}}>{ID === ""? "拜託田一下啦": "查無此ID"}</span></div>}
 			<div><input type="password" className="text-input" ref={passwdInput} placeholder="密碼" onChange={(e) => setPasswd(e.target.value)}/></div>
-			{passwd !== ""? null: <div><span style={{color: "red"}}>必填</span></div>}
-			<div><label><input type="checkbox" onChange={showPasswd} />顯示密碼</label></div>
+			{passwd !== ""? null: <div><span style={{color: "red"}}>拜託田一下啦</span></div>}
+			<div><label><input type="checkbox" onChange={showPasswd} />讓我看看</label></div>
 			<button className="btn login-btn" onClick={login} style={validID && passwd !== ""? {}:{background: "#eeeeee"}}>登入</button>
 			<button className="btn cancel-btn"onClick={() => window.location = "/"}>取消</button>
 		</div>

@@ -12,7 +12,7 @@ export default function Header(props) {
 		window.location = "/signup";
 	}
 	const onLogoutClick = () => {
-		props.removeUserID();
+		props.removeUser();
 		window.location = "/";
 	}
     return (
