@@ -25,19 +25,47 @@ const Post = () => {
 	console.log(page);
 
 	if (data && comment_query.data) {
+		const post = data.post;
 		const comments = comment_query.data.commentList.comments;
 		const lastPage = comment_query.data.commentList.pageNum;
+		if (lastPage <= 0) {
+			lastPage = 1;
+		}
 		console.log(comments, lastPage);
 		const prev = page-1>0? page-1: 1;
 		const next = page+1<=lastPage? page+1: lastPage;
 		return (
 			<>
-				<p>{data.post.body}</p>
+				<div id="main_post">
+					<div className="header">
+						<p className="post_title">{post.title}</p>
+						<p className='author'><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
+						<p className="edit_time">{post.time}</p>
+					</div>
+					<div className="text_body">{post.body}</div>
+					<p className="count"><span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span> </p>
+				</div>
+
+				<div id="comment_list">
+					{comments.map((comment) => {
+						return (
+							<div className="comment_section">
+								<div className="header">
+									<p className='author'><span className="username">{comment.publisher.name}</span> <span className="userID">{comment.publisher.id}</span> </p>
+									<p className="edit_time">{comment.time}</p>
+								</div>
+								<div className="text_body">{comment.body}</div>
+								<p className="count"><span className="like_count">推: {comment.like.count}</span> <span className="unlike_count">噓: {comment.unlike.count}</span> </p>
+							</div>
+						);
+					})}
+
+				</div>
 
 
 
 
-				
+
 				<div className="list_pager">
 					<div className="page_button">
 						<a href={`?page=${prev}`} title='上一頁' className='prev'>◄</a>
