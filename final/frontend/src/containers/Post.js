@@ -19,11 +19,11 @@ const Post = () => {
 
 
 	const { loading, error, data, subscribeToMore } = useQuery(POST_QUERY, {variables: {id: id},});
-	console.log("post", data);
+	// console.log("post", data);
 	const comment_query = useQuery(COMMENT_LIST_QUERY, {variables: {Page: page, postID: id},});
-	console.log("comments", comment_query.data);
+	// console.log("comments", comment_query.data);
 
-	console.log(page);
+	// console.log(page);
 
 	if (data && comment_query.data) {
 		const post = data.post;
@@ -32,7 +32,7 @@ const Post = () => {
 		if (lastPage <= 0) {
 			lastPage = 1;
 		}
-		console.log(comments, lastPage);
+		// console.log(comments, lastPage);
 		const prev = page-1>0? page-1: 1;
 		const next = page+1<=lastPage? page+1: lastPage;
 		return (
