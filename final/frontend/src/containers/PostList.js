@@ -22,7 +22,7 @@ const PostList = () => {
 		return (<h1>No post.</h1>)
 	}
 	let lastPage = 10;
-	console.log(data);
+	// console.log(data);
 	if (data) {
 		posts = data.postList.posts;
 		lastPage = data.postList.pageNum;
@@ -54,7 +54,7 @@ const PostList = () => {
 								let url = firstImage? firstImage.getAttribute("src"): "";
 								let firstP = div.getElementsByTagName('p')[0];
 								let abstract = firstP? firstP.innerHTML: "";
-								console.log(abstract);
+								// console.log(abstract);
 					    		return (<tr className="list_item">
 								            <td className="list_commentNum"><h1>{post.comments.length}</h1></td>
 								            <td className="list_main" >
