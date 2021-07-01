@@ -38,7 +38,7 @@ const Post = () => {
 			<>
 				<div id="main_post">
 					<div className="header">
-						<p className="post_title">{post.title}</p>
+						<h1 className="post_title">{post.title}</h1>
 						<p className='author'><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
 						<p className="edit_time">{post.time}</p>
 					</div>
