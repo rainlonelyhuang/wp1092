@@ -51,6 +51,12 @@ a {
     color: #464646;
 }
 
+.list_wrap {
+    margin-bottom: 10px;
+    background: #FFF;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 33%);
+    margin-top: 75px;
+}
 
 .post_list {
     width: 100%;
@@ -138,12 +144,11 @@ td {
     padding: 0;
 }
 
-.list_count {
+.list_count{
     padding: 7px 12px;
     width: 135px;
     text-align: center;
     font-size: 12px;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -163,4 +168,12 @@ td {
 
 .list_count_user {
     text-align: center;
+}
+
+.list_time{
+    padding: 7px 12px;
+    width: 135px;
+    text-align: center;
+    font-size: 12px;
+    box-sizing: border-box;
 }

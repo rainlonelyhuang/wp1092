@@ -25,62 +25,67 @@ const PostList = () => {
 	if (data) {
 		posts = data.postList.posts;
 		lastPage = data.postList.pageNum;
+		const prev = page-1>0? page-1: 1;
+		const next = page+1<=lastPage? page+1: lastPage;
 	
 		return (
 			<>
-				<table className="post_list">
-					<thead>
-				        <tr className="list_head">
-				            <th></th>
-				            <th></th>
-				            <th>推噓/作者</th>
-				            <th>最新回覆時間</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				    	{posts.map((post) => {
-				    		return (<tr className="list_item">
-							            <td className="list_commentNum">{post.comments.length}</td>
-							            <td className="list_main">
-							            	<NavLink to={`/posts/${post.Id}`}>
-							            		<div className="list_img">
-							            			縮圖
-							            		</div>
-							            		<div className="list_text">
-							            			<p className="list_title">{post.title}</p>
-							            			<p className="list_brief">{post.body.substring(0, 10)}</p>
-							            		</div>
-							            	</NavLink>
-							        	</td>
-							            <td className="list_count">
-							            	<p className="list_count_number">
-							            		<span title={`推: ${post.like.count}`}>{post.like.count}</span>
-							            		/
-							            		<span title={`噓: ${post.unlike.count}`}>{post.unlike.count}</span>
-							            	</p>
-							            	<p className="list_count_user">{post.publisher.id}</p>
-							            </td>
-							            <td className="list_time">
-							            	<p className="list_time_number">
-							            		<span title={`最新回覆時間: ${post.time}`}>{post.time}</span>
-							            	</p>
-							            	<p className="list_time_user">{post.publisher.id}</p>
-							            </td>
-							        </tr>
+				<div className="list_wrap">
+					<table className="post_list">
+						<thead>
+					        <tr className="list_head">
+					            <th></th>
+					            <th></th>
+					            <th>推噓/作者</th>
+					            <th>最新回覆時間</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					    	{posts.map((post) => {
+					    		// console.log(post)
+					    		return (<tr className="list_item">
+								            <td className="list_commentNum">{post.comments.length}</td>
+								            <td className="list_main">
+								            	<NavLink to={`/post/${post.id}?page=1`}>
+								            		<div className="list_img">
+								            			縮圖
+								            		</div>
+								            		<div className="list_text">
+								            			<p className="list_title">{post.title}</p>
+								            			<p className="list_brief">{post.body.substring(0, 10)}</p>
+								            		</div>
+								            	</NavLink>
+								        	</td>
+								            <td className="list_count">
+								            	<p className="list_count_number">
+								            		<span title={`推: ${post.like.count}`}>{post.like.count}</span>
+								            		/
+								            		<span title={`噓: ${post.unlike.count}`}>{post.unlike.count}</span>
+								            	</p>
+								            	<p className="list_count_user">{post.publisher.id}</p>
+								            </td>
+								            <td className="list_time">
+								            	<p className="list_time_number">
+								            		<span title={`最新回覆時間: ${post.time}`}>{post.time}</span>
+								            	</p>
+								            	<p className="list_time_user">{post.publisher.id}</p>
+								            </td>
+								        </tr>
 
-				    		);
-				    	})}
-				    </tbody>
-				</table>
+					    		);
+					    	})}
+					    </tbody>
+					</table>
+				</div>
 
 				<div className="list_pager">
 					<div className="page_button">
-						<a href='?page=4&bsn=60076' title='上一頁快速鍵：F7' className='prev'>◄</a>
-						<a href='?page=6&bsn=60076' title='下一頁快速鍵：F8' className='next'>►</a>
+						<a href={`?page=${prev}`} title='上一頁' className='prev'>◄</a>
+						<a href={`?page=${next}`} title='下一頁' className='next'>►</a>
 						<p className="page_buttonA">
 							
 
-							{[page].map((page, index)=>{
+							{[page].map((page, index)=>{///buttons
 								let first = page -2;
 								let last = page + 2;
 								while (first < 1) {
@@ -115,8 +120,9 @@ const PostList = () => {
 								if (lastPage - last > 1) {
 									buttons.push("...");
 								}
-
-								buttons.push(<a href={`/posts?page=${lastPage}`}>{lastPage}</a>);
+								if (lastPage !== 1) {
+									buttons.push(<a href={`/posts?page=${lastPage}`}>{lastPage}</a>);
+								}
 								return (
 									<>
 										{buttons}

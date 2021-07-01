@@ -1,15 +1,36 @@
 import { gql } from '@apollo/client';
 
+export const USER_QUERY = gql`
+    query user($id: String){
+        user(id: $id){
+			id
+			name
+			password
+		}
+    }
+`;
 
-export const STATS_COUNT_QUERY = gql`
-    query statsCount(
-        $locationKeywords: [String!]!
-        $severity: Int
-    ) {
-        statsCount(
-            locationKeywords: $locationKeywords,
-            severity: $severity,
-        )
+export const POST_QUERY = gql`
+    query post($id: ID){
+        post(id: $id){
+			id
+	        title
+	        publisher {
+	          id
+	          name
+	        }
+	        body
+	        like {
+	          count
+	        }
+	        unlike {
+	          count
+	        }
+	        comments {
+	        	time
+	        }
+	        time
+		}
     }
 `;
 
@@ -18,9 +39,10 @@ export const POST_LIST_QUERY = gql`
         $Page: Int
     ) {
         postList(
-            Page: $Page,
+            Page: $Page
         ) {
 		    posts {
+		    	id
 		        title
 		        publisher {
 		          id
@@ -34,6 +56,35 @@ export const POST_LIST_QUERY = gql`
 		        }
 		        comments {
 		        	time
+		        }
+		        time
+		    }
+		    pageNum
+        }
+    }
+`;
+
+export const COMMENT_LIST_QUERY = gql`
+    query commentList(
+        $Page: Int
+        $postID: ID
+    ) {
+        commentList(
+            Page: $Page
+            postID: $postID
+        ) {
+		    comments {
+		    	
+		        publisher {
+		          id
+		          name
+		        }
+		        body
+		        like {
+		          count
+		        }
+		        unlike {
+		          count
 		        }
 		        time
 		    }

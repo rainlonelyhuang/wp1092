@@ -1,21 +1,30 @@
 import "./Header.css";
 
 
-export default function Header() {
-    const onStatsClick = () => {
+export default function Header(props) {
+    const onHomeClick = () => {
         window.location = "/";
     }
-    const onUploadClick = () => {
-        window.location = "/upload";
+    const onLoginClick = () => {
+        window.location = "/login";
     }
+	const onSignupClick = () => {
+		window.location = "/signup";
+	}
+	const onLogoutClick = () => {
+		props.removeUserID();
+		window.location = "/";
+	}
     return (
         <div className="Header">
-            <div onClick={onStatsClick} className="slogan">
-                確診個案追蹤系統
+            <div onClick={onHomeClick} className="slogan">
+                星爆論壇
             </div>
             <div className="control">
-                <div className= "button" onClick={onStatsClick}> 統計表 </div>
-                <div className= "button" onClick={onUploadClick}> 上傳 </div>
+                { props.userID === ""? <div className= "button" onClick={onLoginClick}> 登入 </div>: null }
+                { props.userID === ""? <div className= "button" onClick={onSignupClick}> 註冊 </div>: null }
+                { props.userID === ""? null: <div className= "button" onClick={onLogoutClick}> 登出 </div> }
+				{ props.userID === ""? null: <div>hi, 星爆的 {props.userID}</div>}
             </div>
         </div>
     );

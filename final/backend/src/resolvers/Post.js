@@ -22,6 +22,12 @@ const Post = {
     console.log("like",unlike)
     return unlike;
   },
+
+  async id(parent, args, { db }, info) {
+    console.log("parent id =",parent._id)
+    return parent._id;
+  },
+
 };
 
 export { Post as default };
