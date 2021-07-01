@@ -10,6 +10,11 @@ import NewPost from './containers/NewPost';
 import Header from './components/Header';
 import { useState } from 'react';
 
+
+import PostList from './containers/PostList';
+import Post from './containers/Post';
+
+
 const LOCALSTORAGE_USER_ID = 'userID';
 const LOCALSTORAGE_USER_PASSWD = 'userPasswd';
 function App() {
@@ -38,9 +43,18 @@ function App() {
 				<Route path="/signup">
                     <Signup saveUser={saveUser}/>
                 </Route>
+<<<<<<< HEAD
 				<Route path="/newpost">
 					<NewPost />
 				</Route>
+=======
+                <Route exact path="/posts">
+                    <PostList/>
+                </Route>
+                <Route path="/post/:id?">
+                    <Post/>
+                </Route>
+>>>>>>> 8185677a1f8923874546cf2e494a9a3127bbf9d3
                 <Route path="/">
                     null
                 </Route>
