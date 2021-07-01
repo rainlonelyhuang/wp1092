@@ -35,18 +35,18 @@ function getDateTime() {
 
 const Mutation = {
 
-  async newUser(parent, {id, name, password,image}, { db, pubsub }, info) {
+  async newUser(parent, {id, name, password}, { db, pubsub }, info) {
     let existing = await checkUser(db, id);
 //    console.log("existing=",existing)
     if (!existing) {
       console.log("user not exit, register success:" + name + id + password)
-      return (await new db.UserModel({id: id, name: name, password: password, image:image}).save());
+      return (await new db.UserModel({id: id, name: name, password: password}).save());
     }
     console.log("user exist, cannot new: " + name + id + password);
     return existing;
   },
 
-  async modifyUser(parent, {id, name, password,image}, { db, pubsub }, info) {
+  async modifyUser(parent, {id, name, password}, { db, pubsub }, info) {
     let publisher = await checkUser(db, id);
     if(!bcrypt.compareSync(password, publisher.password)){
       console.log("verify fail, password wrong")
@@ -54,7 +54,7 @@ const Mutation = {
     }
     if (publisher) {
       console.log("user exist, updating")
-      let user = await db.UserModel.findOneAndUpdate({id:id},{name: name, image: image},{new:true})
+      let user = await db.UserModel.findOneAndUpdate({id:id},{name: name},{new:true})
       //console.log("newUser=",user)
       return user
     }
