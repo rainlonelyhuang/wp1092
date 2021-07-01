@@ -39,7 +39,7 @@ const NewPost = () => {
   
   useEffect(() => {
 	  if(!userID){
-		  alert("請先登入或註冊喔！")
+		  alert("請先登入或註冊以取得最佳體驗！")
 		  window.location = `/post/${postid}`;
 	  }
   }, userID);

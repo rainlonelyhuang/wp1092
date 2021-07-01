@@ -11,7 +11,9 @@
     right: 0;
 	z-index: 2;
 }
-
+.Header .slogan {
+	cursor: pointer;
+}
 .Header .control {
     display: flex;
     flex-direction: row-reverse;

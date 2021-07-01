@@ -6,7 +6,8 @@ import {
   POST_LIST_QUERY,
 } from '../graphql';
 
-import "./PostList.css"
+import "./PostList.css";
+import default_img from "../images/uso.png"
 
 const PostList = () => {
 	// const page=0;
@@ -38,7 +39,7 @@ const PostList = () => {
 					<table className="post_list">
 						<thead>
 					        <tr className="list_head">
-					            <th></th>
+					            <th>人氣</th>
 					            <th></th>
 					            <th>推噓/作者</th>
 					            <th>最新回覆時間</th>
@@ -47,17 +48,26 @@ const PostList = () => {
 					    <tbody>
 					    	{posts.map((post) => {
 					    		// console.log(post)
+								let div = document.createElement('div');
+								div.innerHTML = post.body;
+								let firstImage = div.getElementsByTagName('img')[0];
+								let url = firstImage? firstImage.getAttribute("src"): "";
+								let firstP = div.getElementsByTagName('p')[0];
+								let abstract = firstP? firstP.innerHTML: "";
+								console.log(abstract);
 					    		return (<tr className="list_item">
-								            <td className="list_commentNum">{post.comments.length}</td>
-								            <td className="list_main">
+								            <td className="list_commentNum"><h1>{post.comments.length}</h1></td>
+								            <td className="list_main" >
 								            	<NavLink to={`/post/${post.id}?page=1`}>
+												<div style={{display: "flex"}}>
 								            		<div className="list_img">
-								            			縮圖
+													{<img src={url? url: default_img} />}
 								            		</div>
-								            		<div className="list_text">
+								            		<div className="list_text" style={{marginLeft: "10px"}}>
 								            			<p className="list_title">{post.title}</p>
-								            			<p className="list_brief">{post.body.substring(0, 10)}</p>
+								            			<p className="list_brief">{abstract.substring(0, 200)}</p>
 								            		</div>
+												</div>
 								            	</NavLink>
 								        	</td>
 								            <td className="list_count">

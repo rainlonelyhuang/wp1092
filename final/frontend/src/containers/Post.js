@@ -33,9 +33,10 @@ const Post = () => {
 
 	const [changeLike] = useMutation(LIKE_MUTATION, {
 	  onCompleted(data){
-		  console.log("count",data.doLike.count);
-
-	  } 
+		  // console.log("count",data.doLike.count);
+	  },onError(error){
+		alert("請先登入或註冊以取得最佳體驗！");
+		}
 	});
 
 	const on_like = async (userID, pointID) => {
@@ -52,42 +53,63 @@ const Post = () => {
 		// console.log(comments, lastPage);
 		const prev = page-1>0? page-1: 1;
 		const next = page+1<=lastPage? page+1: lastPage;
+		
+		let canLike = true, canUnlike = true, like_class= "", unlike_class = "";
+		// console.log(post)
+		let foundLike = post.like.users? post.like.users.find(e => e.id === userID): "";
+		console.log('post like users', post.like.users);
+		let foundUnlike = post.unlike.users? post.unlike.users.find(e => e.id === userID): "";
+		if (foundLike) {
+			canUnlike = false;
+			like_class=" pressed_like";
+		}
+		if (foundUnlike) {
+			canLike = false;
+			unlike_class=" pressed_unlike";
+		}
+		
 		return (
 			<>
 				<div id="main_post">
 					<div className="header">
 						<h1 className="post_title">{post.title}</h1>
-						<p className='author'><img className="user-image" src={default_user_image} /><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
+						<p className='author'><img className="user-image" src={default_user_image} />樓主 <span className="username" style={{marginLeft: "4px"}}>{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
 						<p className="edit_time">{post.time}</p>
 					</div>
 
 					<div className="text_body" dangerouslySetInnerHTML={{__html: post.body}} />
 					<p className="count">
-					<span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span>
-					<a className="comment-button" href={`/newcomment/${id}`} >回覆</a>
-					</p>
-
-					<div className="text_body"  dangerouslySetInnerHTML={{__html: post.body}} />
-					<p className="count"><span className="like_count" onClick={() => on_like(userID, post.like.id)}>推: {post.like.count}</span> 
-					<span className="unlike_count" onClick={() =>  on_like(userID, post.unlike.id)}>噓: {post.unlike.count}</span> </p>
-
+					<button className={"like_count"+like_class} onClick={() => on_like(userID, post.like.id)} disabled={!canLike}>推: {post.like.count}</button>
+					<button className={"unlike_count"+unlike_class} onClick={() =>  on_like(userID, post.unlike.id)} disabled={!canUnlike} >噓: {post.unlike.count}</button>
+					<a className="comment-button" href={`/newcomment/${id}`} >回覆</a> </p>
 				</div>
 
 				<div id="comment_list">
-					{comments.map((comment) => {
+					{comments.map((comment, index) => {
+						let num = (parseInt(page, 10) - 1) * 20 + index + 2;
+						
+						canLike = true; canUnlike = true; like_class= ""; unlike_class = "";
+						foundLike = comment.like.users? comment.like.users.find(e => e.id === userID): "";
+						foundUnlike = comment.unlike.users? comment.unlike.users.find(e => e.id === userID): "";
+						if (foundLike) {
+							canUnlike = false;
+							like_class=" pressed_like";
+						}
+						if (foundUnlike) {
+							canLike = false;
+							unlike_class=" pressed_unlike";
+						}
 						return (
 							<div className="comment_section">
 								<div className="header">
-									<p className='author'><span className="username">{comment.publisher.name}</span> <span className="userID">{comment.publisher.id}</span> </p>
+								<p className='author'>{num + "樓"}<span className="username" style={{marginLeft: "10px"}}>{comment.publisher.name}</span> <span className="userID">{comment.publisher.id}</span> </p>
 									<p className="edit_time" >{comment.time}</p>
 								</div>
-
 								<div className="text_body" dangerouslySetInnerHTML={{__html: comment.body}} />
-								<p className="count"><span className="like_count">推: {comment.like.count}</span> <span className="unlike_count">噓: {comment.unlike.count}</span> </p>
-
-								<div className="text_body">{comment.body}</div>
-								<p className="count"><span className="like_count" onClick={() =>  on_like(userID, comment.like.id)}>推: {comment.like.count}</span> 
-								<span className="unlike_count" onClick={() =>  on_like(userID, comment.unlike.id)}>噓: {comment.unlike.count}</span> </p>
+								<p className="count">
+								<button className={"like_count"+like_class} onClick={() => on_like(userID, comment.like.id)} disabled={!canLike}>推: {comment.like.count}</button>
+								<button className={"unlike_count"+unlike_class} onClick={() =>  on_like(userID, comment.unlike.id)} disabled={!canUnlike} >噓: {comment.unlike.count}</button>
+								</p>
 
 							</div>
 						);

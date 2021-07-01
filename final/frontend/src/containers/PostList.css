@@ -59,7 +59,9 @@ a {
 }
 
 .post_list {
-    width: 100%;
+    width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
 }
 
 table {
@@ -176,4 +178,9 @@ td {
     text-align: center;
     font-size: 12px;
     box-sizing: border-box;
+}
+
+.list_img img{
+	width: 150px;
+	height: 100px;
 }
