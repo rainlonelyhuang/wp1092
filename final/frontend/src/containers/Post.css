@@ -90,9 +90,13 @@
 .like_count {
 	padding: 4px 12px 4px 12px;
     border: solid;
-    border-radius: 5px; 
+    border-radius: 5px;
     border-color: orange;
     cursor: pointer;
+    color: orange;
+}
+.pressed_like {
+    background-color: #fdd6bd;
 }
 .pressed_like {
     background-color: #fdd6bd;

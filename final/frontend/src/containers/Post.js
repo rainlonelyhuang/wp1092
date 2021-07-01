@@ -57,7 +57,6 @@ const Post = () => {
 		let canLike = true, canUnlike = true, like_class= "", unlike_class = "";
 		// console.log(post)
 		let foundLike = post.like.users? post.like.users.find(e => e.id === userID): "";
-		console.log('post like users', post.like.users);
 		let foundUnlike = post.unlike.users? post.unlike.users.find(e => e.id === userID): "";
 		if (foundLike) {
 			canUnlike = false;
@@ -67,7 +66,6 @@ const Post = () => {
 			canLike = false;
 			unlike_class=" pressed_unlike";
 		}
-		
 		return (
 			<>
 				<div id="main_post">
