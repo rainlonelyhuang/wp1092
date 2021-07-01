@@ -1,0 +1,14 @@
+.container {
+	padding-top: 70px;
+	padding-right: 10%;
+	padding-left: 10%;
+}
+.title-input {
+	padding-left: 15px;
+    border-radius: 10px;
+    width: 100%;
+    height: 40px;
+    background-color: #fff;
+    font-size: 20px;
+    -webkit-box-sizing: border-box;
+}

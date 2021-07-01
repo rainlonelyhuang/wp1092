@@ -3,12 +3,13 @@
     flex-direction: row;
     font-size: large;
     padding: 3vh 3vw 3vh 3vw;
-    background: linear-gradient(45deg, blue, black);;
+    background: linear-gradient(45deg, blue, black);
     color: white;
 	position: fixed;
 	left: 0;
     top: 0;
     right: 0;
+	z-index: 2;
 }
 
 .Header .control {
