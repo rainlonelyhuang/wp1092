@@ -43,20 +43,19 @@ function App() {
 				<Route path="/signup">
                     <Signup saveUser={saveUser}/>
                 </Route>
-<<<<<<< HEAD
+
 				<Route path="/newpost">
 					<NewPost />
 				</Route>
-=======
                 <Route exact path="/posts">
                     <PostList/>
                 </Route>
                 <Route path="/post/:id?">
                     <Post/>
                 </Route>
->>>>>>> 8185677a1f8923874546cf2e494a9a3127bbf9d3
+
                 <Route path="/">
-                    null
+                    <PostList/>
                 </Route>
             </Switch>
         </Router>

@@ -10,4 +10,8 @@ const verifyPasswd = (passwd, hashKey) => {
 	return bcrypt.compareSync(passwd, hashKey);
 }
 
-export { hashPasswd, verifyPasswd };
+const getUser = () => {
+	return [localStorage.getItem("userID"), localStorage.getItem("userPasswd")];
+}
+
+export { hashPasswd, verifyPasswd, getUser };

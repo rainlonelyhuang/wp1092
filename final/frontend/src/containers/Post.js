@@ -32,11 +32,7 @@ const Post = () => {
 		const next = page+1<=lastPage? page+1: lastPage;
 		return (
 			<>
-				<p>{data.post.body}</p>
-
-
-
-
+				<div style={{marginTop: "80px", marginLeft: "100px", marginRight: "100px"}} dangerouslySetInnerHTML={{__html: data.post.body}} />
 				
 				<div className="list_pager">
 					<div className="page_button">
