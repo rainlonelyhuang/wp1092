@@ -53,7 +53,7 @@ function App() {
                     <Post/>
                 </Route>
                 <Route path="/">
-                    null
+                    <PostList/>
                 </Route>
             </Switch>
         </Router>

@@ -9,9 +9,9 @@ export const NEW_USER_MUTATION = gql`
 	  }
   }
 `
-export const New_POST_MUTATION = gql`
-	mutation newPost($title: String, $publisherID: String, $body: String, $time: String){
-	  newPost(title: $title, publisherID: $publisherID, body: $body, time: $time){
+export const NEW_POST_MUTATION = gql`
+	mutation newPost($title: String, $publisherID: String, $password: String, $body: String){
+	  newPost(title: $title, publisherID: $publisherID, password: $password, body: $body){
 		  title
 		  body
 		  time

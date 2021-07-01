@@ -42,7 +42,7 @@ const Post = () => {
 						<p className='author'><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
 						<p className="edit_time">{post.time}</p>
 					</div>
-					<div className="text_body">{post.body}</div>
+					<div className="text_body"  dangerouslySetInnerHTML={{__html: post.body}} />
 					<p className="count"><span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span> </p>
 				</div>
 
@@ -61,10 +61,6 @@ const Post = () => {
 					})}
 
 				</div>
-
-
-
-
 
 				<div className="list_pager">
 					<div className="page_button">

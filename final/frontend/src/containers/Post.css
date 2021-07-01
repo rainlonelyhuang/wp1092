@@ -1,10 +1,12 @@
 
 #main_post {
 	margin-top: 80px;
+	margin-left: 15%;
+	margin-right: 15%;
 }
 
 #main_post, .comment_section {
-    width: 760px;
+    width: 70%;
     text-align: left;
     box-sizing: border-box;
     box-shadow: 0px 2px 4px rgb(0 0 0 / 33%);
