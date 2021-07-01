@@ -14,9 +14,10 @@ const postSchema = new Schema({
   publisher: { type: mongoose.Types.ObjectId, ref: 'User' },
   comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }],
   body: { type: String, required: true },
-  like: { type: mongoose.Types.ObjectId, required: "Point" },
-  unlike: { type: mongoose.Types.ObjectId, required: "Point" },
+  like: { type: mongoose.Types.ObjectId, ref: "Point" },
+  unlike: { type: mongoose.Types.ObjectId, ref: "Point" },
   time: { type: String, required: true },
+  id: { type: mongoose.Types.ObjectId, ref: "Post" },
 });
 
 const pointSchema = new Schema({
@@ -29,8 +30,8 @@ const pointSchema = new Schema({
 const commentSchema = new Schema({
   publisher: { type: mongoose.Types.ObjectId, ref: 'User' },
   body: { type: String, required: true },
-  like: { type: mongoose.Types.ObjectId, required: "Point" },
-  unlike: { type: mongoose.Types.ObjectId, required: "Point" },
+  like: { type: mongoose.Types.ObjectId, ref: "Point" },
+  unlike: { type: mongoose.Types.ObjectId, ref: "Point" },
   time: { type: String, required: true },
 });
 

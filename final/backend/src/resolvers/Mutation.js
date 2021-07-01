@@ -95,7 +95,7 @@ const Mutation = {
 
   async doLike(parent, {userID, pointID}, { db, pubsub }, info){
     let point= await db.PointModel.findOne({_id:ObjectId(pointID)})
-    console.log("find point",point)
+    //console.log("find point",point)
     let users = point.users
     let count = point.count
     let index = await users.indexOf(userID)
