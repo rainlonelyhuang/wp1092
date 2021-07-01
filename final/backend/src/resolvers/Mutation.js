@@ -53,10 +53,9 @@ const Mutation = {
     let existing = await checkUser(db, id);
     if (existing) {
       console.log("user exit, update success" + name + id + password)
-      let user = await db.UserModel.findOneAndUpdate({id:id},{id: id, name: name, password: password})
+      let user = await db.UserModel.findOneAndUpdate({id:id},{id: id, name: name, password: password},{new:true})
       //console.log("newUser=",user)
       return user
-      return (await new db.UserModel({id: id, name: name, password: password}).save());
     }
     console.log("user not exist, cannot modify");
     return existing
@@ -101,11 +100,7 @@ const Mutation = {
 
     if(!bcrypt.compareSync(password, publisher.password)){
       console.log("verify fail",password, publisher.password)
-<<<<<<< HEAD
       return null;
-=======
-     return null;
->>>>>>> 7237dc40f67ee5f0e57dda9ee019d9309e65d597
     }
 
     let like_p = await new db.PointModel({users:[],count:0,type:true}).save()
@@ -117,7 +112,7 @@ const Mutation = {
     let old_post = await db.PostModel.findOne({_id:ObjectId(parentPostID)});
     let old_comments = old_post.comments
     //console.log("pre post",old_post,old_comments)
-    let new_post = await db.PostModel.findOneAndUpdate({_id:parentPostID},{time:time, comments:[...old_comments,comment._id]})
+    let new_post = await db.PostModel.findOneAndUpdate({_id:parentPostID},{time:time, comments:[...old_comments,comment._id]},{new:true})
     //console.log("changed post",new_post)
         //console.log("comment",comment)
     return comment;
@@ -171,13 +166,14 @@ const Mutation = {
       console.log("cancel ")
       await users.splice(index,1)
       //console.log("user now is",users)
-      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count-1, users: users})
+      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count-1, users: users},{new:true})
+      //point = await db.PointModel.findOne({_id:ObjectId(pointID)})
       return point;
     }
     else{
       console.log("add ");
       await users.push(user._id);
-      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users})
+      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users},{new:true})
       return point;
     }
   },
