@@ -1,12 +1,13 @@
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import {
-  useParams,  useLocation
+  useParams,  useLocation, NavLink
 } from "react-router-dom";
 import queryString from "query-string";
 import {
   POST_QUERY,
   COMMENT_LIST_QUERY,
 } from '../graphql';
+import default_user_image from '../images/default-user-image.png';
 
 
 import "./Post.css"
@@ -39,11 +40,14 @@ const Post = () => {
 				<div id="main_post">
 					<div className="header">
 						<h1 className="post_title">{post.title}</h1>
-						<p className='author'><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
+						<p className='author'><img className="user-image" src={default_user_image} /><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
 						<p className="edit_time">{post.time}</p>
 					</div>
-					<div className="text_body"  dangerouslySetInnerHTML={{__html: post.body}} />
-					<p className="count"><span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span> </p>
+					<div className="text_body" dangerouslySetInnerHTML={{__html: post.body}} />
+					<p className="count">
+					<span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span>
+					<a className="comment-button" href={`/newcomment/${id}`} >回覆</a>
+					</p>
 				</div>
 
 				<div id="comment_list">
@@ -52,9 +56,9 @@ const Post = () => {
 							<div className="comment_section">
 								<div className="header">
 									<p className='author'><span className="username">{comment.publisher.name}</span> <span className="userID">{comment.publisher.id}</span> </p>
-									<p className="edit_time">{comment.time}</p>
+									<p className="edit_time" >{comment.time}</p>
 								</div>
-								<div className="text_body">{comment.body}</div>
+								<div className="text_body" dangerouslySetInnerHTML={{__html: comment.body}} />
 								<p className="count"><span className="like_count">推: {comment.like.count}</span> <span className="unlike_count">噓: {comment.unlike.count}</span> </p>
 							</div>
 						);
@@ -79,33 +83,33 @@ const Post = () => {
 									last--;
 								}
 								let buttons = [];
-								buttons.push(<a href={`/posts?page=${1}`}>{1}</a>);
+								buttons.push(<a href={`/post/${id}?page=${1}`}>{1}</a>);
 								
 
 								if (first - 1 > 1) {
 									buttons.push("...");
 								}
 								if (first !== 1 && first !== page) {
-									buttons.push(<a href={`/posts?page=${first}`}>{first}</a>);
+									buttons.push(<a href={`/post/${id}?page=${first}`}>{first}</a>);
 								}
 								if (page - first > 1) {
-									buttons.push(<a href={`/posts?page=${first+1}`}>{first+1}</a>);
+									buttons.push(<a href={`/post/${id}?page=${first+1}`}>{first+1}</a>);
 								}
 								if (page !== first && page !== last) {
-									buttons.push(<a href={`/posts?page=${page}`}>{page}</a>);
+									buttons.push(<a href={`/post/${id}?page=${page}`}>{page}</a>);
 								}
 
 								if (last - page > 1) {
-									buttons.push(<a href={`/posts?page=${last-1}`}>{last-1}</a>);
+									buttons.push(<a href={`/post/${id}?page=${last-1}`}>{last-1}</a>);
 								}
 								if (last !== lastPage && last !== page) {
-									buttons.push(<a href={`/posts?page=${last}`}>{last}</a>);
+									buttons.push(<a href={`/post/${id}?page=${last}`}>{last}</a>);
 								}
 								if (lastPage - last > 1) {
 									buttons.push("...");
 								}
 								if (lastPage !== 1) {
-									buttons.push(<a href={`/posts?page=${lastPage}`}>{lastPage}</a>);
+									buttons.push(<a href={`/post/${id}?page=${lastPage}`}>{lastPage}</a>);
 								}
 								return (
 									<>

@@ -1,7 +1,5 @@
 #main_post {
 	margin-top: 80px;
-	margin-left: 15%;
-	margin-right: 15%;
 }
 
 #main_post, .comment_section {
@@ -14,6 +12,8 @@
     vertical-align: top;
     float: none;
     margin-bottom: 8px;
+	margin-left: 15%;
+	margin-right: 15%;
 }
 .post_title {
 	margin-bottom: 12px;
@@ -55,9 +55,33 @@
     color: #a6a6a6;
 }
 .text_body {
-	min-height: 100px;
+	/* min-height: 100px; */
 	padding-left: 20px;
 }
 .count {
 	padding-left: 20px;
+}
+.comment-button {
+    margin-left: 1vw;
+    margin-right: 3vw;
+	margin-bottom: 3vh;
+    font-size: 16px;
+    padding: 4px 12px 4px 12px;
+    color: #ffe484;
+    border: 1px solid #ffe484;
+    background-color: #666666;
+    border-radius: 5px;
+	cursor: pointer;
+	float: right;
+}
+.comment-button:hover {
+    background-color: #ffe484;
+    color: black;
+    transition-duration: 200ms;
+}
+
+.user-image {
+    border-radius: 50%;
+	width: 40px;
+	height: 40px;
 }
