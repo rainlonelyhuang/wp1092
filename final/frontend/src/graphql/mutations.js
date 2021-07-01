@@ -20,6 +20,14 @@ export const NEW_POST_MUTATION = gql`
   }
 `;
 
+export const NEW_COMMENT_MUTATION = gql`
+	mutation newComment($publisherID: String, $body: String, $parentPostID: ID, $password: String){
+		newComment(publisherID: $publisherID, body: $body, parentPostID: $parentPostID, password: $password){
+			  body
+			  time
+		}
+	}
+`;
 export const LIKE_MUTATION = gql`
 	mutation doLike($userID: String, $pointID: ID){
 	  doLike(userID: $userID, pointID: $pointID){

@@ -21,9 +21,6 @@ function getDateTime() {
     var min  = date.getMinutes();
     min = (min < 10 ? "0" : "") + min;
 
-    var sec  = date.getSeconds();
-    sec = (sec < 10 ? "0" : "") + sec;
-
     var year = date.getFullYear();
 
     var month = date.getMonth() + 1;
@@ -32,40 +29,44 @@ function getDateTime() {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+    return year + ":" + month + ":" + day + ":" + hour + ":" + min;
 }
 
 
 const Mutation = {
 
-  async newUser(parent, {id, name, password}, { db, pubsub }, info) {
+  async newUser(parent, {id, name, password,image}, { db, pubsub }, info) {
     let existing = await checkUser(db, id);
 //    console.log("existing=",existing)
     if (!existing) {
       console.log("user not exit, register success:" + name + id + password)
-      return (await new db.UserModel({id: id, name: name, password: password}).save());
+      return (await new db.UserModel({id: id, name: name, password: password, image:image}).save());
     }
     console.log("user exist, cannot new: " + name + id + password);
     return existing;
   },
 
-  async modifyUser(parent, {id, name, password}, { db, pubsub }, info) {
-    let existing = await checkUser(db, id);
-    if (existing) {
-      console.log("user exit, update success" + name + id + password)
-      let user = await db.UserModel.findOneAndUpdate({id:id},{id: id, name: name, password: password},{new:true})
+  async modifyUser(parent, {id, name, password,image}, { db, pubsub }, info) {
+    let publisher = await checkUser(db, id);
+    if(!bcrypt.compareSync(password, publisher.password)){
+      console.log("verify fail, password wrong")
+      return null;
+    }
+    if (publisher) {
+      console.log("user exist, updating")
+      let user = await db.UserModel.findOneAndUpdate({id:id},{name: name, image: image},{new:true})
       //console.log("newUser=",user)
       return user
     }
     console.log("user not exist, cannot modify");
-    return existing
+    return null;
   },
 
 
   async newPost(parent, {title, publisherID, body,  password}, { db, pubsub }, info) {
     ///////////////////////cannot return with like,unlike,comment
     let time = getDateTime();
-    console.log("time = ", time)
+    //console.log("time = ", time)
     let publisher = await checkUser(db,publisherID);
     if(!publisher){
       console.log("publisher not exist")

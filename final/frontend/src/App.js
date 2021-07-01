@@ -7,6 +7,7 @@ import {
 import Login from './containers/Login';
 import Signup from './containers/Signup';
 import NewPost from './containers/NewPost';
+import NewComment from './containers/NewComment';
 import Header from './components/Header';
 import { useState } from 'react';
 
@@ -45,6 +46,9 @@ function App() {
                 </Route>
 				<Route path="/newpost">
 					<NewPost />
+				</Route>
+				<Route path="/newcomment/:postid">
+					<NewComment />
 				</Route>
                 <Route exact path="/posts">
                     <PostList/>
