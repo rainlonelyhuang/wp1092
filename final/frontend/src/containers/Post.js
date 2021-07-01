@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import React, { useState } from 'react';
 import {
   useParams,  useLocation
 } from "react-router-dom";
@@ -6,11 +7,17 @@ import queryString from "query-string";
 import {
   POST_QUERY,
   COMMENT_LIST_QUERY,
+  LIKE_MUTATION
 } from '../graphql';
 
-
 import "./Post.css"
+
+const LOCALSTORAGE_USER_ID = 'userID';
+
+
+
 const Post = () => {
+	const userID = localStorage.getItem(LOCALSTORAGE_USER_ID);
 	let {id} = useParams();
 	let {search} = useLocation();
 	const parsed = queryString.parse(search);
@@ -22,7 +29,18 @@ const Post = () => {
 	const comment_query = useQuery(COMMENT_LIST_QUERY, {variables: {Page: page, postID: id},});
 	console.log("comments", comment_query.data);
 
-	console.log(page);
+
+
+	const [changeLike] = useMutation(LIKE_MUTATION, {
+	  onCompleted(data){
+		  console.log("count",data.doLike.count);
+
+	  } 
+	});
+
+	const on_like = async (userID, pointID) => {
+		await changeLike({variables: {userID: userID, pointID: pointID},});
+	}
 
 	if (data && comment_query.data) {
 		const post = data.post;
@@ -43,7 +61,8 @@ const Post = () => {
 						<p className="edit_time">{post.time}</p>
 					</div>
 					<div className="text_body"  dangerouslySetInnerHTML={{__html: post.body}} />
-					<p className="count"><span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span> </p>
+					<p className="count"><span className="like_count" onClick={() => on_like(userID, post.like.id)}>推: {post.like.count}</span> 
+					<span className="unlike_count" onClick={() =>  on_like(userID, post.unlike.id)}>噓: {post.unlike.count}</span> </p>
 				</div>
 
 				<div id="comment_list">
@@ -79,33 +98,33 @@ const Post = () => {
 									last--;
 								}
 								let buttons = [];
-								buttons.push(<a href={`/posts?page=${1}`}>{1}</a>);
+								buttons.push(<a href={`/post/${id}?page=${1}`}>{1}</a>);
 								
 
 								if (first - 1 > 1) {
 									buttons.push("...");
 								}
 								if (first !== 1 && first !== page) {
-									buttons.push(<a href={`/posts?page=${first}`}>{first}</a>);
+									buttons.push(<a href={`/post/${id}?page=${first}`}>{first}</a>);
 								}
 								if (page - first > 1) {
-									buttons.push(<a href={`/posts?page=${first+1}`}>{first+1}</a>);
+									buttons.push(<a href={`/post/${id}?page=${first+1}`}>{first+1}</a>);
 								}
 								if (page !== first && page !== last) {
-									buttons.push(<a href={`/posts?page=${page}`}>{page}</a>);
+									buttons.push(<a href={`/post/${id}?page=${page}`}>{page}</a>);
 								}
 
 								if (last - page > 1) {
-									buttons.push(<a href={`/posts?page=${last-1}`}>{last-1}</a>);
+									buttons.push(<a href={`/post/${id}?page=${last-1}`}>{last-1}</a>);
 								}
 								if (last !== lastPage && last !== page) {
-									buttons.push(<a href={`/posts?page=${last}`}>{last}</a>);
+									buttons.push(<a href={`/post/${id}?page=${last}`}>{last}</a>);
 								}
 								if (lastPage - last > 1) {
 									buttons.push("...");
 								}
 								if (lastPage !== 1) {
-									buttons.push(<a href={`/posts?page=${lastPage}`}>{lastPage}</a>);
+									buttons.push(<a href={`/post/${id}?page=${lastPage}`}>{lastPage}</a>);
 								}
 								return (
 									<>

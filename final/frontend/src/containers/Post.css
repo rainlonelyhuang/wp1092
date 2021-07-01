@@ -1,8 +1,6 @@
 
 #main_post {
 	margin-top: 80px;
-	margin-left: 15%;
-	margin-right: 15%;
 }
 
 #main_post, .comment_section {
@@ -15,6 +13,8 @@
     vertical-align: top;
     float: none;
     margin-bottom: 8px;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 .post_title {
 	margin-bottom: 12px;
@@ -61,4 +61,17 @@
 }
 .count {
 	padding-left: 20px;
+}
+.like_count {
+    border: solid;
+    border-radius: 50%; 
+    border-color: orange;
+    cursor: pointer;
+}
+
+.unlike_count {
+    border: solid;
+    border-radius: 50%; 
+    border-color: gray;
+    cursor: pointer;
 }
