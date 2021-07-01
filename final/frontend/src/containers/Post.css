@@ -64,14 +64,22 @@
 }
 .like_count {
     border: solid;
-    border-radius: 50%; 
+    border-radius: 25%; 
     border-color: orange;
     cursor: pointer;
+    color: orange;
+}
+.pressed_like {
+    background-color: #fdd6bd;
 }
 
 .unlike_count {
     border: solid;
-    border-radius: 50%; 
+    border-radius: 25%; 
     border-color: gray;
     cursor: pointer;
+    color: gray;
+}
+.pressed_unlike {
+    background-color: lightgray;
 }

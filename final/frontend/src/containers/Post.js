@@ -49,9 +49,25 @@ const Post = () => {
 		if (lastPage <= 0) {
 			lastPage = 1;
 		}
-		console.log(comments, lastPage);
+		// console.log(comments, lastPage);
 		const prev = page-1>0? page-1: 1;
 		const next = page+1<=lastPage? page+1: lastPage;
+
+		// console.log(post.like.users)
+		let canLike = true, canUnlike = true, like_class= "", unlike_class = "";
+		const foundLike = post.like.users.find(e => e.id === userID);
+		const foundUnlike = post.unlike.users.find(e => e.id === userID);
+		if (foundLike) {
+			canUnlike = false;
+			like_class=" pressed_like";
+		}
+		if (foundUnlike) {
+			canLike = false;
+			unlike_class=" pressed_unlike";
+		}
+
+
+
 		return (
 			<>
 				<div id="main_post">
@@ -61,8 +77,8 @@ const Post = () => {
 						<p className="edit_time">{post.time}</p>
 					</div>
 					<div className="text_body"  dangerouslySetInnerHTML={{__html: post.body}} />
-					<p className="count"><span className="like_count" onClick={() => on_like(userID, post.like.id)}>推: {post.like.count}</span> 
-					<span className="unlike_count" onClick={() =>  on_like(userID, post.unlike.id)}>噓: {post.unlike.count}</span> </p>
+					<p className="count"><button className={"like_count"+like_class} onClick={() => on_like(userID, post.like.id)} disabled={!canLike}>推: {post.like.count}</button> 
+					<button className={"unlike_count"+unlike_class} onClick={() =>  on_like(userID, post.unlike.id)} disabled={!canUnlike} >噓: {post.unlike.count}</button> </p>
 				</div>
 
 				<div id="comment_list">

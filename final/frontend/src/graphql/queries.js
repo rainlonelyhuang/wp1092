@@ -23,10 +23,16 @@ export const POST_QUERY = gql`
 	        like {
 	          count
 	          id
+	          users {
+	          	id
+	          }
 	        }
 	        unlike {
 	          count
 	          id
+	          users {
+	          	id
+	          }
 	        }
 	        comments {
 	        	time
@@ -87,10 +93,16 @@ export const COMMENT_LIST_QUERY = gql`
 		        like {
 		          count
 		          id
+		          users {
+		          	id
+		          }
 		        }
 		        unlike {
 		          count
 		          id
+		          users {
+		          	id
+		          }
 		        }
 		        time
 		    }

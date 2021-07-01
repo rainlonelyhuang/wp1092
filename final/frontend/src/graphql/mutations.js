@@ -25,6 +25,9 @@ export const LIKE_MUTATION = gql`
 	  doLike(userID: $userID, pointID: $pointID){
 		  id
 		  count
+		  users {
+          	id
+          }
 	  }
   }
 `;
