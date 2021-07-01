@@ -13,7 +13,7 @@ type Mutation {
   newPost(title: String, publisherID: String, body: String, password: String): Post!
   newComment(publisherID: String, body: String, parentPostID: ID, password: String): Comment!
   deletePost(publisherID: String, postID: ID, password: String): Boolean
-  doLike(userID:ID, pointID:ID): Point
+  doLike(userID:String, pointID:ID): Point
 }
 
 type postPayload {
