@@ -13,11 +13,16 @@ const NewPost = () => {
   const [newPost] = useMutation(NEW_POST_MUTATION, {
 	  onCompleted(data){
 		  setPostID(data.newPost.id);
-	  } 
+	  },
+	  onError(error){
+		  console.log(error);
+		  alert("發文失敗！或許你偷偷換了ID或密碼......");
+		  window.location = "/";
+	  }
 	});
   const [userID, userPasswd] = getUser();
   const handleSubmit = async (event) => {
-    alert("Text was submitted: " + body);
+    // alert("Text was submitted: " + body);
 	await newPost({
 		variables:{
 			title, publisherID: userID, password: userPasswd, body
