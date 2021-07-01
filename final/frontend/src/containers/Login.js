@@ -21,7 +21,6 @@ const Login = ({ saveUser }) => {
 			}
 			else{
 				alert("密碼錯誤，請再試一次");
-				setPasswd('');
 			}
 		}
 	}

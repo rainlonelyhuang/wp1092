@@ -26,7 +26,7 @@ const Mutation = {
     if (existing) {
       console.log("user exit, update success" + name + id + password)
       let user = await db.UserModel.findOneAndUpdate({id:id},{id: id, name: name, password: password})
-      console.log("newUser=",user)
+      //console.log("newUser=",user)
       return user
       return (await new db.UserModel({id: id, name: name, password: password}).save());
     }
@@ -44,14 +44,14 @@ const Mutation = {
     }
 
     if (title && publisher && body && time) {
-      console.log("newPost success")
+      //console.log("newPost success")
 
       let like_p = await new db.PointModel({users:[],count:0,type:true}).save()
       let unlike_p = await new db.PointModel({users:[],count:0,type:false}).save()
 
-      console.log("like_p",like_p)
+      //console.log("like_p",like_p)
       let post = await new db.PostModel({title:title, publisher:publisher, body:body, time:time, like:like_p, unlike:unlike_p, comments:[]}).save()
-      console.log("post",post)
+      //console.log("post",post)
       return post;
     }
     console.log("missing input data");
@@ -67,13 +67,13 @@ const Mutation = {
 
     let comment = await new db.CommentModel({publisher:publisher, body:body, time:time, like:like_p, unlike:unlike_p}).save()
 
-    console.log(parentPostID)
+    //console.log(parentPostID)
     let old_post = await db.PostModel.findOne({_id:ObjectId(parentPostID)});
     let old_comments = old_post.comments
-    console.log("pre post",old_post,old_comments)
+    //console.log("pre post",old_post,old_comments)
     let new_post = await db.PostModel.findOneAndUpdate({_id:parentPostID},{time:time, comments:[...old_comments,comment._id]})
-    console.log("changed post",new_post)
-        console.log("comment",comment)
+    //console.log("changed post",new_post)
+        //console.log("comment",comment)
     return comment;
   },
 
@@ -104,12 +104,14 @@ const Mutation = {
       console.log("cancel ")
       await users.splice(index,1)
       //console.log("user now is",users)
-      return await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count-1, users: users})
+      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count-1, users: users})
+      return point;
     }
     else{
-      console.log("add ");
+      //console.log("add ");
       await users.push(userID);
-      return await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users})
+      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users})
+      return point;
     }
   },
 
