@@ -6,6 +6,7 @@ import {
 
 import Login from './containers/Login';
 import Signup from './containers/Signup';
+import NewPost from './containers/NewPost';
 import Header from './components/Header';
 import { useState } from 'react';
 
@@ -42,12 +43,18 @@ function App() {
 				<Route path="/signup">
                     <Signup saveUser={saveUser}/>
                 </Route>
+<<<<<<< HEAD
+				<Route path="/newpost">
+					<NewPost />
+				</Route>
+=======
                 <Route exact path="/posts">
                     <PostList/>
                 </Route>
                 <Route path="/post/:id?">
                     <Post/>
                 </Route>
+>>>>>>> 8185677a1f8923874546cf2e494a9a3127bbf9d3
                 <Route path="/">
                     null
                 </Route>
