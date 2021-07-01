@@ -21,7 +21,7 @@ export const NEW_POST_MUTATION = gql`
 `;
 
 export const LIKE_MUTATION = gql`
-	mutation doLike($userID: ID, $pointID: ID){
+	mutation doLike($userID: String, $pointID: ID){
 	  doLike(userID: $userID, pointID: $pointID){
 		  id
 		  count

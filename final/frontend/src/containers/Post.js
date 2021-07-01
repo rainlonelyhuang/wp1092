@@ -74,7 +74,8 @@ const Post = () => {
 									<p className="edit_time">{comment.time}</p>
 								</div>
 								<div className="text_body">{comment.body}</div>
-								<p className="count"><span className="like_count">推: {comment.like.count}</span> <span className="unlike_count">噓: {comment.unlike.count}</span> </p>
+								<p className="count"><span className="like_count" onClick={() =>  on_like(userID, comment.like.id)}>推: {comment.like.count}</span> 
+								<span className="unlike_count" onClick={() =>  on_like(userID, comment.unlike.id)}>噓: {comment.unlike.count}</span> </p>
 							</div>
 						);
 					})}
