@@ -24,6 +24,7 @@ const pointSchema = new Schema({
   users: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   count: { type: Number, required: true },
   type: {type: Boolean, required: true},
+  id: { type: mongoose.Types.ObjectId, ref: "Point" },
 });
 
 
