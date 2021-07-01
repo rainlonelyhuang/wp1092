@@ -104,12 +104,14 @@ const Mutation = {
       console.log("cancel ")
       await users.splice(index,1)
       //console.log("user now is",users)
-      return await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count-1, users: users})
+      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count-1, users: users})
+      return point;
     }
     else{
       console.log("add ");
       await users.push(userID);
-      return await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users})
+      let point = await db.PointModel.findOneAndUpdate({_id:ObjectId(pointID)},{count:count+1, users: users})
+      return point;
     }
   },
 
