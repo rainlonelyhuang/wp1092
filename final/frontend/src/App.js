@@ -9,27 +9,33 @@ import Signup from './containers/Signup';
 import Header from './components/Header';
 import { useState } from 'react';
 
-const LOCALSTORAGE_KEY = 'userID';
+const LOCALSTORAGE_USER_ID = 'userID';
+const LOCALSTORAGE_USER_PASSWD = 'userPasswd';
 function App() {
-	const [userID, setUserID] = useState(localStorage.getItem(LOCALSTORAGE_KEY) || '');
-	const saveUserID = (ID) => {
+	const [userID, setUserID] = useState(localStorage.getItem(LOCALSTORAGE_USER_ID) || '');
+	const [userPasswd, setUserPasswd] = useState(localStorage.getItem(LOCALSTORAGE_USER_PASSWD) || '');
+	const saveUser = (ID, passwd) => {
 		setUserID(ID);
-		localStorage.setItem(LOCALSTORAGE_KEY, ID);
+		setUserPasswd(passwd);
+		localStorage.setItem(LOCALSTORAGE_USER_ID, ID);
+		localStorage.setItem(LOCALSTORAGE_USER_PASSWD, passwd);
 	};
-	const removeUserID = () => {
+	const removeUser = () => {
 		setUserID('');
-		localStorage.removeItem(LOCALSTORAGE_KEY);
+		setUserPasswd('');
+		localStorage.removeItem(LOCALSTORAGE_USER_ID);
+		localStorage.removeItem(LOCALSTORAGE_USER_PASSWD);
 	};
   return (
     <div className="App">
-        <Header userID={userID} removeUserID={removeUserID}/>
+        <Header userID={userID} removeUser={removeUser}/>
         <Router>
             <Switch>
                 <Route path="/login">
-                    <Login saveUserID={saveUserID}/>
+                    <Login saveUser={saveUser}/>
                 </Route>
 				<Route path="/signup">
-                    <Signup saveUserID={saveUserID}/>
+                    <Signup saveUser={saveUser}/>
                 </Route>
                 <Route path="/">
                     null
