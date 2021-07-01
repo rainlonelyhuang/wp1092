@@ -1,17 +1,21 @@
 # 實作網路論壇
 
 測試用帳密:
+
 帳號:123
+
 密碼:123
 
 ## 安裝
 在frontend和backend資料夾中執行"yarn"以安裝相關package
+
 請將含有MONGO_URL的.env檔放到backend中
 
 
 
 ## 在local端執行
 在frontend中執行"yarn start"，前端將開在port 3000
+
 在backend中執行"yarn server"，server將開在port 5000
 
 
@@ -28,7 +32,9 @@
 
 ## 組員分工
 B07902066 黃禹喆：前端登入註冊畫面、發文頁面、前端介面設計、錄製demo影片
+
 B07902068 陳柏豪：前端顯示文章列表架構、寫README.md
+
 B07902080 黃義峰：後端graphql、寫FB社團貼文
 
 
