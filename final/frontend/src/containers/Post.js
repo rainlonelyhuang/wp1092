@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import React, { useState } from 'react';
 import {
   useParams,  useLocation, NavLink
 } from "react-router-dom";
@@ -6,12 +7,18 @@ import queryString from "query-string";
 import {
   POST_QUERY,
   COMMENT_LIST_QUERY,
+  LIKE_MUTATION
 } from '../graphql';
 import default_user_image from '../images/default-user-image.png';
 
-
 import "./Post.css"
+
+const LOCALSTORAGE_USER_ID = 'userID';
+
+
+
 const Post = () => {
+	const userID = localStorage.getItem(LOCALSTORAGE_USER_ID);
 	let {id} = useParams();
 	let {search} = useLocation();
 	const parsed = queryString.parse(search);
@@ -23,7 +30,17 @@ const Post = () => {
 	const comment_query = useQuery(COMMENT_LIST_QUERY, {variables: {Page: page, postID: id},});
 	// console.log("comments", comment_query.data);
 
-	// console.log(page);
+
+	const [changeLike] = useMutation(LIKE_MUTATION, {
+	  onCompleted(data){
+		  console.log("count",data.doLike.count);
+
+	  } 
+	});
+
+	const on_like = async (userID, pointID) => {
+		await changeLike({variables: {userID: userID, pointID: pointID},});
+	}
 
 	if (data && comment_query.data) {
 		const post = data.post;
@@ -43,11 +60,17 @@ const Post = () => {
 						<p className='author'><img className="user-image" src={default_user_image} /><span className="username">{post.publisher.name}</span> <span className="userID">{post.publisher.id}</span> </p>
 						<p className="edit_time">{post.time}</p>
 					</div>
+
 					<div className="text_body" dangerouslySetInnerHTML={{__html: post.body}} />
 					<p className="count">
 					<span className="like_count">推: {post.like.count}</span> <span className="unlike_count">噓: {post.unlike.count}</span>
 					<a className="comment-button" href={`/newcomment/${id}`} >回覆</a>
 					</p>
+
+					<div className="text_body"  dangerouslySetInnerHTML={{__html: post.body}} />
+					<p className="count"><span className="like_count" onClick={() => on_like(userID, post.like.id)}>推: {post.like.count}</span> 
+					<span className="unlike_count" onClick={() =>  on_like(userID, post.unlike.id)}>噓: {post.unlike.count}</span> </p>
+
 				</div>
 
 				<div id="comment_list">
@@ -58,8 +81,14 @@ const Post = () => {
 									<p className='author'><span className="username">{comment.publisher.name}</span> <span className="userID">{comment.publisher.id}</span> </p>
 									<p className="edit_time" >{comment.time}</p>
 								</div>
+
 								<div className="text_body" dangerouslySetInnerHTML={{__html: comment.body}} />
 								<p className="count"><span className="like_count">推: {comment.like.count}</span> <span className="unlike_count">噓: {comment.unlike.count}</span> </p>
+
+								<div className="text_body">{comment.body}</div>
+								<p className="count"><span className="like_count" onClick={() =>  on_like(userID, comment.like.id)}>推: {comment.like.count}</span> 
+								<span className="unlike_count" onClick={() =>  on_like(userID, comment.unlike.id)}>噓: {comment.unlike.count}</span> </p>
+
 							</div>
 						);
 					})}

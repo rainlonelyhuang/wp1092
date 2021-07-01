@@ -28,3 +28,11 @@ export const NEW_COMMENT_MUTATION = gql`
 		}
 	}
 `;
+export const LIKE_MUTATION = gql`
+	mutation doLike($userID: String, $pointID: ID){
+	  doLike(userID: $userID, pointID: $pointID){
+		  id
+		  count
+	  }
+  }
+`;

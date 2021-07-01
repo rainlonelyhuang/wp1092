@@ -51,7 +51,7 @@ const Query = {
 
   async postList(parent, {Page}, { db }, info) {
     Page = Page - 1
-    let perPage = 5
+    let perPage = 20
     let skipNum = Page * perPage
     //console.log("1",Page,await db.PostModel.findOne())     
     let posts = await db.PostModel.find().sort({time:-1}).limit(perPage).skip(skipNum);
@@ -61,7 +61,7 @@ const Query = {
 
   async commentList(parent, {Page,postID}, { db }, info) {
     Page = Page - 1
-    let perPage = 5
+    let perPage = 20
     let skipNum = Page * perPage
 
     let post = await db.PostModel.findOne({_id:ObjectId(postID)});
