@@ -36,7 +36,7 @@ const Signup = ({ saveUser }) => {
 		}
 	}
 	const testID = () => {
-		return ID.match(/^[A-​Za-z0-9]+/g) && ID.search(/\\|`/g) < 0;
+		return !ID.match(/[^A-Za-z0-9]+/g);
 	}
 	
 	const testLength = () => {

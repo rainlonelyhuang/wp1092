@@ -25,6 +25,10 @@ const PostList = () => {
 	if (data) {
 		posts = data.postList.posts;
 		lastPage = data.postList.pageNum;
+		if (lastPage <= 0) {
+			lastPage = 1;
+		}
+
 		const prev = page-1>0? page-1: 1;
 		const next = page+1<=lastPage? page+1: lastPage;
 	

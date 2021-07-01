@@ -101,7 +101,11 @@ const Mutation = {
 
     if(!bcrypt.compareSync(password, publisher.password)){
       console.log("verify fail",password, publisher.password)
+<<<<<<< HEAD
       return null;
+=======
+     return null;
+>>>>>>> 7237dc40f67ee5f0e57dda9ee019d9309e65d597
     }
 
     let like_p = await new db.PointModel({users:[],count:0,type:true}).save()
