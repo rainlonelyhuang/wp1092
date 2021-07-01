@@ -1,3 +1,63 @@
-/* p { */
-	/* margin-top: 80px; */
-/* } */
+#main_post {
+	margin-top: 80px;
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+#main_post, .comment_section {
+    width: 70%;
+    text-align: left;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 33%);
+    background: #FFF;
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+    margin-bottom: 8px;
+}
+.post_title {
+	margin-bottom: 12px;
+    border-bottom: 1px solid #bfbfbf;
+    padding-top: 4px;
+    padding-bottom: 12px;
+    text-indent: -10px;
+    line-height: 1.5em;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+.header{
+    padding: 36px;
+    padding-top: 24px;
+    padding-bottom: 0;
+    margin-bottom: 18px;
+}
+.username {
+	display: inline-block;
+    vertical-align: baseline;
+    font-size: 15px;
+    font-weight: bold;
+    color: #595959;
+}
+.userID {
+	display: inline-block;
+    vertical-align: baseline;
+    color: #0089ac;
+    font-size: 12px;
+}
+
+.edit_time {
+	display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    color: #a6a6a6;
+}
+.text_body {
+	min-height: 100px;
+	padding-left: 20px;
+}
+.count {
+	padding-left: 20px;
+}

@@ -43,7 +43,6 @@ function App() {
 				<Route path="/signup">
                     <Signup saveUser={saveUser}/>
                 </Route>
-
 				<Route path="/newpost">
 					<NewPost />
 				</Route>
@@ -53,7 +52,6 @@ function App() {
                 <Route path="/post/:id?">
                     <Post/>
                 </Route>
-
                 <Route path="/">
                     <PostList/>
                 </Route>
